@@ -1,0 +1,126 @@
+# Shoka 主题配置
+# 此文件用于覆盖 themes/shoka/_config.yml 中的配置
+
+# 站点备用名称
+alternate: ''
+
+# 菜单配置
+menu:
+  home: / || home
+  about: /about/ || user      # 取消注释显示"关于"页面
+  posts:                       # 取消注释显示"文章"菜单
+    default: / || feather
+    archives: /archives/ || list-alt
+    categories: /categories/ || th
+    tags: /tags/ || tags
+  friends: /friends/ || heart
+  links: /links/ || magic
+
+# 社交链接
+# 格式: 链接名: 链接地址 || 图标名 || 颜色
+social:
+  # github: https://github.com/yourname || github || "#191717"
+  # twitter: https://twitter.com/yourname || twitter || "#00aff0"
+  # email: mailto:yourname@mail.com || envelope || "#55acd5"
+
+# 侧边栏配置
+sidebar:
+  # 侧边栏位置
+  position: left
+  # position: right
+  # 侧边栏头像
+  avatar: avatar.jpg
+
+# 部件（小工具）开关
+widgets:
+  # 显示随机文章
+  random_posts: true
+  # 显示最近评论（需要配置评论系统）
+  recent_comments: true
+
+# 页脚配置
+footer:
+  # 网站建立时间
+  since: 2010
+  icon:
+    name: sakura rotate
+    # 改变图标颜色（使用 16 进制色码）
+    color: "#66ccff"
+  # 显示字数统计（需要安装额外插件）
+  count: false
+  # 显示"Powered by Hexo & Shoka"
+  powered: true
+
+# 文章配置
+post:
+  # 显示字数统计（需要安装额外插件）
+  count: false
+
+# 暗黑模式（默认根据设备设置判断）
+# 设置为 true 时，页面默认显示暗黑模式
+darkmode: false
+
+# 页面自动滚动到上次访问位置
+auto_scroll: true
+
+# 加载动画设置
+loader:
+  start: true    # 进入页面时显示
+  switch: true   # 切换页面时显示
+
+# 点击烟火效果
+fireworks:
+  enable: true
+  color:
+    - "rgba(255,182,185,.9)"
+    - "rgba(250,227,217,.9)"
+    - "rgba(187,222,214,.9)"
+
+# 字体配置
+font:
+  enable: true
+  # 全局字体
+  global:
+    external: true
+    family: Mulish
+    size:
+  # Logo 字体
+  logo:
+    external: true
+    family: Fredericka the Great
+    size: 3.5
+  # 网站标题字体
+  title:
+    external: true
+    family: Noto Serif JP
+    size: 2.5
+  # 标题字体（h1-h6）
+  headings:
+    external: true
+    family: Noto Serif SC
+    size:
+  # 文章内容字体
+  posts:
+    external: true
+    family:
+  # 代码字体
+  codes:
+    external: true
+    family: Inconsolata
+
+# 静态资源路径
+statics: /
+css: css
+js: js
+images: images
+
+# 网站图标配置
+favicon:
+  apple_touch_icon: /apple-touch-icon.png
+  # safari_pinned_tab: /logo.svg
+  # android_manifest: /manifest.json
+  # ms_browserconfig: /browserconfig.xml
+
+# 阿里巴巴 iconfont 配置
+# 从 https://www.iconfont.cn/ 获取自己的 iconfont ID
+iconfont: "1832207_igi8uaupcus"

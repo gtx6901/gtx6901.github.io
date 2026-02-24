@@ -1,0 +1,3 @@
+[submodule "site/themes/shoka"]
+	path = site/themes/shoka
+	url = https://github.com/amehime/hexo-theme-shoka.git
