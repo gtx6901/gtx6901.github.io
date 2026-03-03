@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd site
-          npm install
+          npm ci
 
       - name: Build Site
         run: |
