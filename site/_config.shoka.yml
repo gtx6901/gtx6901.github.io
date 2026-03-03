@@ -7,19 +7,20 @@ alternate: ''
 # 菜单配置
 menu:
   home: / || home
-  about: /about/ || user      # 取消注释显示"关于"页面
-  posts:                       # 取消注释显示"文章"菜单
+  posts:
     default: / || feather
     archives: /archives/ || list-alt
     categories: /categories/ || th
     tags: /tags/ || tags
-  friends: /friends/ || heart
-  links: /links/ || magic
+  notes: /notes/ || book
+  photography: /photography/ || camera
+  projects: /projects/ || code
+  about: /about/ || user
 
 # 社交链接
 # 格式: 链接名: 链接地址 || 图标名 || 颜色
 social:
-  # github: https://github.com/yourname || github || "#191717"
+  github: https://github.com/gtx6901 || github || "#191717"
   # twitter: https://twitter.com/yourname || twitter || "#00aff0"
   # email: mailto:yourname@mail.com || envelope || "#55acd5"
 
@@ -41,7 +42,7 @@ widgets:
 # 页脚配置
 footer:
   # 网站建立时间
-  since: 2010
+  since: 2026
   icon:
     name: sakura rotate
     # 改变图标颜色（使用 16 进制色码）
