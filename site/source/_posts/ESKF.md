@@ -1,6 +1,14 @@
 ---
 title: 误差状态卡尔曼滤波(ESKF) 101
+date: 2026-03-04
+categories:
+  - 笔记
+tags:
+  - 状态估计
+  - 卡尔曼滤波
+  - 流形
 math: true
+cover: cover.png
 permalink: /notes/ESKF/
 ---
 
@@ -74,7 +82,7 @@ permalink: /notes/ESKF/
 
 > 虽然旋转本身不能相加，但**旋转的微小误差**可以用切空间里的向量来表示，而这个向量**可以相加**。
 
-![manifold](/notes/manifold.png)
+![manifold](manifold.png)
 ---
 
 ### ESKF 的核心思路

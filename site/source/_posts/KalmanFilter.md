@@ -1,6 +1,13 @@
 ---
 title: 卡尔曼滤波(Kalman Filter) 101
+date: 2026-03-03
+categories:
+  - 笔记
+tags:
+  - 状态估计
+  - 卡尔曼滤波
 math: true
+cover: cover.jpg
 permalink: /notes/KalmanFilter/
 ---
 
@@ -36,7 +43,7 @@ permalink: /notes/KalmanFilter/
 > - 第3步：这个最优估计将作为下一时刻的"上一时刻的结果"，重复第1步
 
 这样，每一个时刻，我们都在做同样的事：**预测 → 测量 → 更新**。 这就是卡尔曼滤波的核心思想。  
-![kalman_iteration](/notes/kalman_iteration.png)
+![kalman_iteration](kalman_iteration.png)
 
 ## 1、系统建模
 ### 状态转移方程
@@ -284,7 +291,7 @@ $$
 
 ## 5、与一维加权均值的比较
 还记得我们在第0节说的吗？其实卡尔曼滤波就是多维的加权平均数，公式是完全对应的。
-![comparison](/notes/comparison.png)
+![comparison](comparison.png)
 >WOW
 ## 6、参考文献
 

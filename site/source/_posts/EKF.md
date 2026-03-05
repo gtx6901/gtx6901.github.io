@@ -1,6 +1,13 @@
 ---
 title: 扩展卡尔曼滤波(EKF) 101
+date: 2026-03-04
+categories:
+  - 笔记
+tags:
+  - 状态估计
+  - 卡尔曼滤波
 math: true
+cover: cover.jpg
 permalink: /notes/EKF/
 ---
 

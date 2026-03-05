@@ -12,7 +12,6 @@ menu:
     archives: /archives/ || list-alt
     categories: /categories/ || th
     tags: /tags/ || tags
-  notes: /notes/ || book
   photography: /photography/ || camera
   projects: /projects/ || code
   about: /about/ || user
