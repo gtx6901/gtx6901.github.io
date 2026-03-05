@@ -24,12 +24,15 @@
 <link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
   
+  <meta name="keywords" content="状态估计,卡尔曼滤波" />
+
 
 <link rel="canonical" href="https://gtx6901.github.io/notes/EKF/">
 
 
 
-  <title>扩展卡尔曼滤波(EKF) 101 |
+  <title>
+扩展卡尔曼滤波(EKF) 101 - 笔记 |
 らくハンの部屋</title>
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -59,6 +62,17 @@
           
   <h1 itemprop="name headline">扩展卡尔曼滤波(EKF) 101
   </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2026-03-04 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2026-03-04T00:00:00+08:00">2026-03-04</time>
+  </span>
+</div>
+
 
           </div>
         </div>
@@ -87,14 +101,7 @@
 
       </div>
       <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWxTOVFEaFV6TlJLUDBJRTVhYUU1TEFiOU5KbDN2TG9IMTdpeDB4Q0RUSHRj.jpg"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2U0d1hBRFJralRiWWY2UWdCc1I0OUFYM1I3TkNUM0RDMmdtY05xaVFUMmdV.png"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2ppWTVuYmFaS1NJSFVHQVhNRWRVTkFYSy0wVTJ0aUxDNVdSbXJHandNaExN.jpg"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRRFB6bmExUnVZYVQ0d2M5c1RTVG9qekFUUGxORTkzYjl1Y3lYTllXQnNIUUJZ.jpg"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzhIN3NjUGlrQ1NyVTlXTGRfWnE1LUFTRlZET1BhN2VDcmVZXzRDWTFhdzVv.png"></li>
-        </ul>
+          <img src="//notes/EKF/cover.jpg">
       </div>
     </header>
     <div id="waves">
@@ -114,9 +121,17 @@
       <div class="inner">
         <div id="main" class="pjax">
           
-  <div class="page wrap">
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="item" rel="index" title="分类于 笔记"><span itemprop="name">笔记</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
-  <link itemprop="mainEntityOfPage" href="https://gtx6901.github.io/notes/EKF/index.html">
+  <link itemprop="mainEntityOfPage" href="https://gtx6901.github.io/notes/EKF/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -260,11 +275,22 @@
 <h2 id="6-参考文献"><a class="markdownIt-Anchor" href="#6-参考文献">#</a> 6、参考文献</h2>
 <p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MTc2NzQ4OQ==">知乎专栏 - 概率机器人 —— 扩展卡尔曼滤波、无迹卡尔曼滤波</span></p>
 
+      <div class="tags">
+          <a href="/tags/%E7%8A%B6%E6%80%81%E4%BC%B0%E8%AE%A1/" rel="tag"><i class="ic i-tag"></i> 状态估计</a>
+          <a href="/tags/%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2/" rel="tag"><i class="ic i-tag"></i> 卡尔曼滤波</a>
+      </div>
   </div>
 
    <footer>
 
     <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2026-03-05 23:19:34" itemprop="dateModified" datetime="2026-03-05T23:19:34+08:00">2026-03-05</time>
+  </span>
 </div>
 
       
@@ -299,7 +325,7 @@
   </li>
   <li class="link">
     <strong>本文链接：</strong>
-    <a href="https://gtx6901.github.io/notes/EKF/index.html" title="扩展卡尔曼滤波(EKF) 101">https://gtx6901.github.io/notes/EKF/index.html</a>
+    <a href="https://gtx6901.github.io/notes/EKF/" title="扩展卡尔曼滤波(EKF) 101">https://gtx6901.github.io/notes/EKF/</a>
   </li>
   <li class="license">
     <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -312,6 +338,31 @@
 </article>
 
   </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/notes/ESKF/" itemprop="url" rel="prev" data-background-image="&#x2F;&#x2F;notes&#x2F;ESKF&#x2F;cover.png" title="误差状态卡尔曼滤波(ESKF) 101">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> 笔记</span>
+  <h3>误差状态卡尔曼滤波(ESKF) 101</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2026/03/05/hello-world/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;dlink.host&#x2F;1drv&#x2F;aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWxTOVFEaFV6TlJLUDBJRTVhYUU1TEFiOU5KbDN2TG9IMTdpeDB4Q0RUSHRj.jpg" title="Hello World">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Hello World</h3>
+  </a>
+
+    </div>
+</div>
+
   
   <div class="wrap" id="comments"></div>
 
@@ -328,6 +379,9 @@
           <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2extended-kalman-filter"><span class="toc-number">1.</span> <span class="toc-text"> 扩展卡尔曼滤波 (Extended Kalman Filter)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2%E7%9A%84%E5%B1%80%E9%99%90"><span class="toc-number">1.1.</span> <span class="toc-text"> 0、卡尔曼滤波的局限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%B3%BB%E7%BB%9F%E5%BB%BA%E6%A8%A1%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text"> 1、系统建模（非线性版本）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BA%BF%E6%80%A7%E5%8C%96%E4%B8%80%E9%98%B6%E6%B3%B0%E5%8B%92%E5%B1%95%E5%BC%80"><span class="toc-number">1.3.</span> <span class="toc-text"> 2、线性化：一阶泰勒展开</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%87%BD%E6%95%B0-f-%E5%B1%95%E5%BC%80"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 对状态转移函数 fff 展开</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%A7%82%E6%B5%8B%E5%87%BD%E6%95%B0-h-%E5%B1%95%E5%BC%80"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 对观测函数 hhh 展开</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-ekf-%E7%9A%84%E6%8E%A8%E5%AF%BC%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text"> 3、EKF 的推导流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E6%AD%A5predict"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 预测步（Predict）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%AD%A5update"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 更新步（Update）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%8C%E6%95%B4%E8%BF%AD%E4%BB%A3%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB"><span class="toc-number">1.5.</span> <span class="toc-text"> 4、完整迭代公式汇总</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ekf-%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text"> 5、EKF 的局限性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.7.</span> <span class="toc-text"> 6、参考文献</span></a></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
+        <ul>
+          <li><a href="/notes/KalmanFilter/" rel="bookmark" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></li><li class="active"><a href="/notes/EKF/" rel="bookmark" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></li><li><a href="/notes/ESKF/" rel="bookmark" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></li>
+        </ul>
       </div>
       <div class="overview panel" data-title="站点概览">
         <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -340,8 +394,20 @@
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">1</span>
+        <span class="count">4</span>
         <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">1</span>
+        <span class="name">分类</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">3</span>
+        <span class="name">标签</span>
       </a>
     </div>
 </nav>
@@ -380,11 +446,6 @@
   </ul>
     
   <li class="item">
-    <a href="/notes/" rel="section"><i class="ic i-book"></i>notes</a>
-  </li>
-
-    
-  <li class="item">
     <a href="/photography/" rel="section"><i class="ic i-camera"></i>photography</a>
   </li>
 
@@ -407,10 +468,12 @@
 
   <ul id="quick">
     <li class="prev pjax">
+        <a href="/notes/ESKF/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
+        <a href="/2026/03/05/hello-world/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -432,9 +495,39 @@
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/2026/03/04/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2026/03/05/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/EKF/" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/KalmanFilter/" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></span>
   </li>
 
   </ul>
