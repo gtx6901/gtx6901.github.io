@@ -56,6 +56,14 @@ post:
   # 显示字数统计（需要安装额外插件）
   count: false
 
+# 赞赏二维码
+reward:
+  enable: true
+  account:
+    wechatpay: /wechatpay_my.png
+    alipay: /alipay_my.png
+    paypal:
+
 # 暗黑模式（默认根据设备设置判断）
 # 设置为 true 时，页面默认显示暗黑模式
 darkmode: false
