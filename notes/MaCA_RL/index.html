@@ -1,0 +1,2000 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="らくハンの部屋" href="https://gtx6901.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="らくハンの部屋" href="https://gtx6901.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="らくハンの部屋" href="https://gtx6901.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="强化学习" />
+
+
+<link rel="canonical" href="https://gtx6901.github.io/notes/MaCA_RL/">
+
+
+
+  <title>
+MaCA 强化学习从零到工程实践指南 - 笔记 |
+らくハンの部屋</title>
+<!-- hexo injector head_end start --><style>
+#qr img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">MaCA 强化学习从零到工程实践指南
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2026-04-11 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2026-04-11T00:00:00+08:00">2026-04-11</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">らくハンの部屋</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRRFB6bmExUnVZYVQ0d2M5c1RTVG9qekFUUGxORTkzYjl1Y3lYTllXQnNIUUJZ.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWxTOVFEaFV6TlJLUDBJRTVhYUU1TEFiOU5KbDN2TG9IMTdpeDB4Q0RUSHRj.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2U0d1hBRFJralRiWWY2UWdCc1I0OUFYM1I3TkNUM0RDMmdtY05xaVFUMmdV.png"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy83OTViN2Y5YzZlMWI4YjE4L0lRQm5WS2xmLXB4bVJyQlp6eHM2ZTVQd0FaRm1jSzVQQnhpSWdrTmdweU94TWRV.webp"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWhKS0Q1aHFKVVRKc1pMdkczZ3FYaUFTM011XzdvcUNHckhkVFhQNFdocFY4.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="item" rel="index" title="分类于 笔记"><span itemprop="name">笔记</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://gtx6901.github.io/notes/MaCA_RL/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="RakuHan">
+    <meta itemprop="description" content=", Touching Fish">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="らくハンの部屋">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="maca-强化学习从零到工程实践指南"><a class="markdownIt-Anchor" href="#maca-强化学习从零到工程实践指南">#</a> MaCA 强化学习从零到工程实践指南</h1>
+<blockquote>
+<p>!AI GENERATED!</p>
+</blockquote>
+<p>这份文档是给当前项目量身定做的 RL 主学习文档。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2d0eDY5MDEvTWFDQS1wcm9qZWN0">项目地址</span></p>
+</blockquote>
+<p>它的目标不是只告诉你 “命令怎么敲”，而是帮助你建立一条连贯的理解链：</p>
+<ol>
+<li>你现在到底在解决什么控制问题。</li>
+<li>为什么这个问题会自然走到强化学习。</li>
+<li>为什么这类问题里  <code>DQN</code>  容易吃力，而  <code>PPO / APPO + LSTM</code>  更合理。</li>
+<li>这套工程里的每个 RL 组件在数学上是什么、在直觉上是什么、在代码里又落在哪里。</li>
+<li>你以后看到日志、checkpoint、reward 曲线时，脑子里应该怎么解释。</li>
+</ol>
+<p>如果你是第一次系统接触 RL，不建议从中间挑一章硬啃。最好的方式是顺序读。</p>
+<hr>
+<h2 id="0-先说一句最重要的话"><a class="markdownIt-Anchor" href="#0-先说一句最重要的话">#</a> 0. 先说一句最重要的话</h2>
+<p>你现在做的不是 “学一个算法名字”，而是在学一套完整的方法论：</p>
+<ul>
+<li>如何把一个复杂的动态决策问题形式化；</li>
+<li>如何设计可学习的观测、动作、奖励；</li>
+<li>如何选择合适的函数逼近器；</li>
+<li>如何在有限算力和不完美环境里做稳定训练；</li>
+<li>如何从日志和失败中反推系统问题。</li>
+</ul>
+<p>从这个角度看，强化学习不是某个公式，而是一门 “控制 + 统计 + 优化 + 软件工程” 的综合课。</p>
+<hr>
+<h2 id="1-这个项目到底在做什么"><a class="markdownIt-Anchor" href="#1-这个项目到底在做什么">#</a> 1. 这个项目到底在做什么</h2>
+<p>先把问题说人话。</p>
+<p>你现在有一个空战仿真环境  <code>MaCA</code> 。</p>
+<p>在当前这条训练路线里：</p>
+<ul>
+<li>红方有  <code>10</code>  架战斗机；</li>
+<li>蓝方是固定规则对手，例如  <code>fix_rule</code> ；</li>
+<li>你每一步都要给红方每架飞机一个离散动作；</li>
+<li>环境推进一步后，会返回新的观测、奖励，以及这一局是否结束。</li>
+</ul>
+<p>你希望学出的不是 “单步看起来聪明” 的动作，而是能在整局博弈里取得更高长期收益的策略。</p>
+<p>如果用自动化里更熟悉的话说：</p>
+<ul>
+<li>这不是一个固定参考轨迹跟踪问题；</li>
+<li>也不是一个已知模型下的最优控制问题；</li>
+<li>而是一个 “模型复杂、观测不全、对手在动、目标多阶段耦合” 的闭环决策问题。</li>
+</ul>
+<p>这也是为什么它很像控制，又不完全等于传统控制。</p>
+<hr>
+<h2 id="2-先复习你已经学过的东西"><a class="markdownIt-Anchor" href="#2-先复习你已经学过的东西">#</a> 2. 先复习你已经学过的东西</h2>
+<p>这一步很重要。很多 RL 名词看起来陌生，但骨架并不陌生。</p>
+<h3 id="21-状态-输入-输出-反馈"><a class="markdownIt-Anchor" href="#21-状态-输入-输出-反馈">#</a> 2.1 状态、输入、输出、反馈</h3>
+<p>在自动控制里，你已经习惯了：</p>
+<ul>
+<li>系统有内部状态；</li>
+<li>控制器根据输出或观测做决策；</li>
+<li>输入会影响状态演化；</li>
+<li>最终形成闭环。</li>
+</ul>
+<p>RL 里只是把这件事推广成：</p>
+<ul>
+<li>系统状态不一定能完全观测；</li>
+<li>系统动力学不一定显式已知；</li>
+<li>控制目标不一定是单个稳态误差，而可能是长期累积收益。</li>
+</ul>
+<p>所以从控制视角看，RL 就是在做：</p>
+<ul>
+<li>观测驱动的闭环策略优化。</li>
+</ul>
+<h3 id="22-代价函数和最优控制"><a class="markdownIt-Anchor" href="#22-代价函数和最优控制">#</a> 2.2 代价函数和最优控制</h3>
+<p>你可能在最优控制或 MPC 里见过类似目标：</p>
+<p>[<br>
+J = \sum_<ruby>t=0}<rp>【</rp><rt>{T</rt><rp>】</rp></ruby> \ell(x_t, u_t)<br>
+]</p>
+<p>意思是：我们不只看当前一步，而是看整个时间区间的累计代价。</p>
+<p>RL 的目标形式非常像，只不过通常写成 “累计奖励最大化” 而不是 “累计代价最小化”：</p>
+<p>[<br>
+J = \mathbb<ruby>E}\left[\sum_{t=0}<rp>【</rp><rt>{T</rt><rp>】</rp></ruby> r_t\right]<br>
+]</p>
+<p>如果把奖励改成负代价，本质是一回事。</p>
+<h3 id="23-梯度下降和参数优化"><a class="markdownIt-Anchor" href="#23-梯度下降和参数优化">#</a> 2.3 梯度下降和参数优化</h3>
+<p>你已经知道神经网络训练本质是：</p>
+<ul>
+<li>定义一个损失函数；</li>
+<li>对参数求梯度；</li>
+<li>用梯度下降或 Adam 之类的优化器更新参数。</li>
+</ul>
+<p>RL 里仍然是这套机器。</p>
+<p>区别在于：</p>
+<ul>
+<li>监督学习的标签通常是现成的；</li>
+<li>RL 的 “标签” 来自和环境交互出来的数据，而且这个标签本身还依赖你当前的策略。</li>
+</ul>
+<p>这会让 RL 比普通监督学习更不稳定。</p>
+<h3 id="24-概率和期望"><a class="markdownIt-Anchor" href="#24-概率和期望">#</a> 2.4 概率和期望</h3>
+<p>RL 几乎所有公式里都离不开两个词：</p>
+<ul>
+<li>随机变量；</li>
+<li>期望。</li>
+</ul>
+<p>因为：</p>
+<ul>
+<li>策略可能是随机的；</li>
+<li>环境转移可能带随机性；</li>
+<li>对手也会造成不确定性；</li>
+<li>我们最终优化的是 “平均意义下的长期表现”。</li>
+</ul>
+<p>所以你看到</p>
+<p>[<br>
+\mathbb{E}[\cdot]<br>
+]</p>
+<p>不要紧张，它只是 “平均来看”。</p>
+<h3 id="25-偏差和方差"><a class="markdownIt-Anchor" href="#25-偏差和方差">#</a> 2.5 偏差和方差</h3>
+<p>后面你会反复看到一个经典张力：</p>
+<ul>
+<li>偏差小，方差大；</li>
+<li>方差小，偏差大。</li>
+</ul>
+<p>这在控制、估计、统计里都常见。</p>
+<p>RL 里的很多技巧，比如：</p>
+<ul>
+<li>baseline；</li>
+<li>TD；</li>
+<li>GAE；</li>
+<li>V-trace；</li>
+</ul>
+<p>本质上都在做偏差 - 方差折中。</p>
+<hr>
+<h2 id="3-什么是强化学习"><a class="markdownIt-Anchor" href="#3-什么是强化学习">#</a> 3. 什么是强化学习</h2>
+<p>最朴素地说：</p>
+<ul>
+<li>观察当前情况；</li>
+<li>采取动作；</li>
+<li>环境给出反馈；</li>
+<li>根据长期结果，逐渐调整策略。</li>
+</ul>
+<p>它和监督学习最不同的一点是：</p>
+<ul>
+<li>监督学习有现成标准答案；</li>
+<li>RL 没有 “老师直接告诉你正确动作”，只有结果反馈。</li>
+</ul>
+<p>所以 RL 解决的是：</p>
+<ul>
+<li>“怎么试错，并从试错中学到长期更优的决策规则”。</li>
+</ul>
+<hr>
+<h2 id="4-用数学语言把-rl-形式化"><a class="markdownIt-Anchor" href="#4-用数学语言把-rl-形式化">#</a> 4. 用数学语言把 RL 形式化</h2>
+<h3 id="41-mdp马尔可夫决策过程"><a class="markdownIt-Anchor" href="#41-mdp马尔可夫决策过程">#</a> 4.1 MDP：马尔可夫决策过程</h3>
+<p>最标准的形式化对象是 MDP。</p>
+<p>一个 MDP 通常包含：</p>
+<ul>
+<li>状态 (s_t)</li>
+<li>动作 (a_t)</li>
+<li>状态转移 (P (s_{t+1}\mid s_t, a_t))</li>
+<li>即时奖励 (r_t)</li>
+<li>折扣因子 (\gamma)</li>
+</ul>
+<p>马尔可夫性的意思是：</p>
+<ul>
+<li>在理想建模里，未来只由当前状态和当前动作决定；</li>
+<li>不需要额外关心更久远的历史。</li>
+</ul>
+<p>这是一个建模假设，不是世界的真理。</p>
+<h3 id="42-pomdp部分可观测-mdp"><a class="markdownIt-Anchor" href="#42-pomdp部分可观测-mdp">#</a> 4.2 POMDP：部分可观测 MDP</h3>
+<p>你这个项目更接近 POMDP，而不是标准 MDP。</p>
+<p>因为实际策略看不到完整状态，只能看到观测 (o_t)：</p>
+<p>[<br>
+o_t \sim \mathcal{O}(s_t)<br>
+]</p>
+<p>也就是说：</p>
+<ul>
+<li>世界里有真实战场状态；</li>
+<li>但每架飞机只能看到局部图像、少量向量信息和合法动作 mask；</li>
+<li>所以策略输入不是 (s_t)，而是 (o_t)。</li>
+</ul>
+<p>这件事后面会直接决定：</p>
+<ul>
+<li>为什么需要  <code>LSTM</code> ；</li>
+<li>为什么单步 DQN 很容易不够；</li>
+<li>为什么 “记忆” 在空战里特别重要。</li>
+</ul>
+<h3 id="43-trajectory轨迹"><a class="markdownIt-Anchor" href="#43-trajectory轨迹">#</a> 4.3 Trajectory：轨迹</h3>
+<p>一局游戏的数据可以写成轨迹：</p>
+<p>[<br>
+\tau = (o_0, a_0, r_0, o_1, a_1, r_1, \dots)<br>
+]</p>
+<p>训练其实就是不断采样这样的轨迹，然后根据轨迹更新参数。</p>
+<h3 id="44-return回报"><a class="markdownIt-Anchor" href="#44-return回报">#</a> 4.4 Return：回报</h3>
+<p>某一时刻开始的折扣累计回报定义为：</p>
+<p>[<br>
+G_t = r_t + \gamma r_<ruby>t+1} + \gamma<rp>【</rp><rt>2 r_{t+2</rt><rp>】</rp></ruby> + \cdots<br>
+]</p>
+<p>它的含义非常重要：</p>
+<ul>
+<li>当前动作好不好，不只看这一拍；</li>
+<li>而看它会不会把你带到长期更有利的局面。</li>
+</ul>
+<p>这正是 “信用分配” 问题的来源。</p>
+<hr>
+<h2 id="5-这个项目中的核心-rl-概念"><a class="markdownIt-Anchor" href="#5-这个项目中的核心-rl-概念">#</a> 5. 这个项目中的核心 RL 概念</h2>
+<p>把抽象名词和当前工程一一对应起来。</p>
+<h3 id="51-agent"><a class="markdownIt-Anchor" href="#51-agent">#</a> 5.1 Agent</h3>
+<p>在物理层面：</p>
+<ul>
+<li>红方有 10 架飞机；</li>
+<li>每架飞机都在做决策。</li>
+</ul>
+<p>在参数层面：</p>
+<ul>
+<li>这 10 架飞机共享一个策略网络；</li>
+<li>不是 10 套彼此独立的参数。</li>
+</ul>
+<p>这叫 “共享策略”。</p>
+<p>这样做的好处是：</p>
+<ul>
+<li>参数量更小；</li>
+<li>数据利用率更高；</li>
+<li>单卡更容易带得动；</li>
+<li>飞机之间可以共享战术结构。</li>
+</ul>
+<h3 id="52-environment"><a class="markdownIt-Anchor" href="#52-environment">#</a> 5.2 Environment</h3>
+<p>环境就是  <code>MaCA</code>  仿真器。</p>
+<p>在当前工程里又分成几层：</p>
+<ol>
+<li>原始  <code>MaCA</code>  环境；</li>
+<li>并行多智能体包装；</li>
+<li><code>Sample Factory</code>  需要的适配接口。</li>
+</ol>
+<p>也就是说，你训练时用到的 “环境” 其实是包装后的版本，而不是原始接口直接裸连。</p>
+<h3 id="53-observation"><a class="markdownIt-Anchor" href="#53-observation">#</a> 5.3 Observation</h3>
+<p>当前训练中的单飞机观测主要包括：</p>
+<ul>
+<li><code>obs</code> ：形状约为  <code>(5, 100, 100)</code>  的图像张量；</li>
+<li><code>measurements</code> ：长度为  <code>6</code>  的归一化向量；</li>
+<li><code>action_mask</code> ：长度为  <code>336</code>  的合法动作 mask；</li>
+<li><code>is_alive</code> ：该飞机是否存活。</li>
+</ul>
+<p>这四部分分别承担不同角色：</p>
+<ul>
+<li>图像负责局部空间结构；</li>
+<li>向量负责关键摘要信息；</li>
+<li>mask 负责动作合法性；</li>
+<li>alive 负责区分死机和活机。</li>
+</ul>
+<h3 id="54-action"><a class="markdownIt-Anchor" href="#54-action">#</a> 5.4 Action</h3>
+<p>动作空间总数：</p>
+<p>[<br>
+ACTION_NUM = 16 \times 21 = 336<br>
+]</p>
+<p>其中：</p>
+<ul>
+<li><code>16</code>  是航向选择；</li>
+<li><code>21</code>  是攻击索引。</li>
+</ul>
+<p>攻击索引里又包括：</p>
+<ul>
+<li><code>0</code> ：不打；</li>
+<li><code>1..10</code> ：长程打第  <code>1..10</code>  个目标；</li>
+<li><code>11..20</code> ：短程打第  <code>1..10</code>  个目标。</li>
+</ul>
+<p>所以每个动作本质上是：</p>
+<ul>
+<li>机动方向；</li>
+<li>攻击决策。</li>
+</ul>
+<p>而雷达扫描 / 干扰支持动作目前由工程中固定策略提供，见  <code>fighter_action_utils.py</code> 。</p>
+<h3 id="55-reward"><a class="markdownIt-Anchor" href="#55-reward">#</a> 5.5 Reward</h3>
+<p>当前奖励来自两层：</p>
+<ol>
+<li>环境单步局部奖励；</li>
+<li>整局胜负奖励。</li>
+</ol>
+<p>当前关键 reward 见  <code>configuration/reward.py</code> ：</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th style="text-align:right">原始值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>击毁敌机</td>
+<td style="text-align:right"><code>420</code></td>
+</tr>
+<tr>
+<td>击毁己机</td>
+<td style="text-align:right"><code>-300</code></td>
+</tr>
+<tr>
+<td>合法开火</td>
+<td style="text-align:right"><code>0</code></td>
+</tr>
+<tr>
+<td>非法开火</td>
+<td style="text-align:right"><code>-8</code></td>
+</tr>
+<tr>
+<td>每步存活</td>
+<td style="text-align:right"><code>-1</code></td>
+</tr>
+<tr>
+<td>普通赢局</td>
+<td style="text-align:right"><code>1200</code></td>
+</tr>
+<tr>
+<td>完全胜利</td>
+<td style="text-align:right"><code>8000</code></td>
+</tr>
+<tr>
+<td>普通失败</td>
+<td style="text-align:right"><code>-1000</code></td>
+</tr>
+<tr>
+<td>平局</td>
+<td style="text-align:right"><code>-500</code></td>
+</tr>
+</tbody>
+</table>
+<p>训练时又会经过：</p>
+<ul>
+<li><code>reward_scale = 0.005</code></li>
+<li><code>reward_clip = 30.0</code></li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>普通赢局缩放后是  <code>6</code></li>
+<li>完全胜利缩放后是  <code>40</code> ，再被裁剪到  <code>30</code></li>
+<li>一次击毁敌机缩放后是  <code>2.1</code></li>
+</ul>
+<p>这套量级设计的核心思想是：</p>
+<ul>
+<li>让 “赢局” 仍然是明显重要的长期信号；</li>
+<li>同时保留击中 / 被击毁这种局部信号；</li>
+<li>避免某个 shaping 奖励主导一切。</li>
+</ul>
+<h3 id="56-episode"><a class="markdownIt-Anchor" href="#56-episode">#</a> 5.6 Episode</h3>
+<p>一局最长默认  <code>1000</code>  步。</p>
+<p>结束条件包括：</p>
+<ul>
+<li>某一方被打穿；</li>
+<li>或达到  <code>max_step</code> 。</li>
+</ul>
+<p>在代码里， <code>maca_max_step</code>  现在默认也是  <code>1000</code> 。</p>
+<hr>
+<h2 id="6-强化学习优化的真正目标是什么"><a class="markdownIt-Anchor" href="#6-强化学习优化的真正目标是什么">#</a> 6. 强化学习优化的真正目标是什么</h2>
+<p>理论上，我们想求的是一套策略参数 (\theta)，使得长期期望回报最大：</p>
+<p>[<br>
+J(\theta) = \mathbb<ruby>E}_{\tau \sim \pi_\theta}\left[\sum_{t=0}<rp>【</rp><rt>{T</rt><rp>】</rp></ruby>\gamma^t r_t\right]<br>
+]</p>
+<p>注意这里有三个层次：</p>
+<ol>
+<li>轨迹 (\tau) 是由当前策略采样出来的；</li>
+<li>每条轨迹的回报不同；</li>
+<li>我们优化的是很多轨迹的平均表现。</li>
+</ol>
+<p>这意味着 RL 的难点不是只在于 “算梯度”，而在于：</p>
+<ul>
+<li>你的训练数据分布会随着策略本身变化；</li>
+<li>也就是说，学习对象和采样分布是耦合的。</li>
+</ul>
+<p>这也是为什么 RL 比普通监督学习更难稳。</p>
+<hr>
+<h2 id="7-value-q-advantage-到底是什么"><a class="markdownIt-Anchor" href="#7-value-q-advantage-到底是什么">#</a> 7. Value、Q、Advantage 到底是什么</h2>
+<p>这几个概念看起来像一堆缩写，但它们在逻辑上很统一。</p>
+<h3 id="71-状态价值函数"><a class="markdownIt-Anchor" href="#71-状态价值函数">#</a> 7.1 状态价值函数</h3>
+<p>状态价值函数定义为：</p>
+<p>[<br>
+V^\pi(s) = \mathbb{E}_\pi[G_t \mid s_t=s]<br>
+]</p>
+<p>意思是：</p>
+<ul>
+<li>如果我现在在状态 (s)；</li>
+<li>后面都按策略 (\pi) 走；</li>
+<li>平均来看还能拿到多少长期回报。</li>
+</ul>
+<p>在 POMDP 里，更准确说策略输入是观测或历史，但直觉一样。</p>
+<h3 id="72-动作价值函数"><a class="markdownIt-Anchor" href="#72-动作价值函数">#</a> 7.2 动作价值函数</h3>
+<p>[<br>
+Q^\pi(s,a) = \mathbb{E}_\pi[G_t \mid s_t=s, a_t=a]<br>
+]</p>
+<p>意思是：</p>
+<ul>
+<li>当前先强制选动作 (a)；</li>
+<li>然后再按策略 (\pi) 往后走；</li>
+<li>长期回报期望是多少。</li>
+</ul>
+<h3 id="73-advantage"><a class="markdownIt-Anchor" href="#73-advantage">#</a> 7.3 Advantage</h3>
+<p>[<br>
+A^\pi(s,a) = Q^\pi(s,a) - V^\pi(s)<br>
+]</p>
+<p>它衡量的不是 “这个动作绝对有多好”，而是：</p>
+<ul>
+<li>它比这个状态下的平均动作好多少。</li>
+</ul>
+<p>这非常重要。</p>
+<p>因为在策略梯度里，我们更关心：</p>
+<ul>
+<li>哪个动作相对更值得增大概率；</li>
+<li>哪个动作相对更应该减小概率。</li>
+</ul>
+<p>如果某个动作的 advantage 为正，说明它比平均水平好；<br>
+如果为负，说明它比平均水平差。</p>
+<hr>
+<h2 id="8-bellman-方程为什么-rl-总在递推"><a class="markdownIt-Anchor" href="#8-bellman-方程为什么-rl-总在递推">#</a> 8. Bellman 方程：为什么 RL 总在递推</h2>
+<p>Bellman 方程的核心思想其实很直观：</p>
+<ul>
+<li>长期价值 = 当前奖励 + 下一步剩余价值。</li>
+</ul>
+<p>对状态价值函数来说：</p>
+<p>[<br>
+V^\pi(s) = \mathbb{E}_{a\sim\pi, s’\sim P}\left[r(s,a) + \gamma V^\pi(s’)\right]<br>
+]</p>
+<p>对动作价值函数来说：</p>
+<p>[<br>
+Q^\pi(s,a) = \mathbb{E}<em a\sim\pi="">{s’\sim P}\left[r(s,a) + \gamma \mathbb{E}</em>Q^\pi(s’,a’)\right]<br>
+]</p>
+<p>这件事的直观含义是：</p>
+<ul>
+<li>你不需要每次都把整条未来完全展开到终局；</li>
+<li>可以用 “下一步的价值估计” 来递推长期价值。</li>
+</ul>
+<p>这就引出了 bootstrapping。</p>
+<hr>
+<h2 id="9-monte-carlo-td-bootstrapping"><a class="markdownIt-Anchor" href="#9-monte-carlo-td-bootstrapping">#</a> 9. Monte Carlo、TD、Bootstrapping</h2>
+<h3 id="91-monte-carlo"><a class="markdownIt-Anchor" href="#91-monte-carlo">#</a> 9.1 Monte Carlo</h3>
+<p>最朴素的方法是：</p>
+<ul>
+<li>把整局跑完；</li>
+<li>用真实整局回报 (G_t) 当监督信号。</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>无偏；</li>
+<li>直接。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>方差很大；</li>
+<li>必须等一整局结束；</li>
+<li>长时程任务学得慢。</li>
+</ul>
+<h3 id="92-temporal-difference"><a class="markdownIt-Anchor" href="#92-temporal-difference">#</a> 9.2 Temporal Difference</h3>
+<p>TD 的思想是：</p>
+<ul>
+<li>不等整局结束；</li>
+<li>用 “当前奖励 + 下一步价值估计” 来更新当前价值估计。</li>
+</ul>
+<p>例如最简单的 TD (0)：</p>
+<p>[<br>
+V(s_t) \leftarrow V(s_t) + \alpha\left(r_t + \gamma V(s_{t+1}) - V(s_t)\right)<br>
+]</p>
+<p>中间的误差项</p>
+<p>[<br>
+\delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)<br>
+]</p>
+<p>叫做 TD error。</p>
+<h3 id="93-bootstrapping"><a class="markdownIt-Anchor" href="#93-bootstrapping">#</a> 9.3 Bootstrapping</h3>
+<p>所谓 bootstrapping，就是：</p>
+<ul>
+<li>用自己的估计去更新自己的估计。</li>
+</ul>
+<p>它会引入偏差，但能大幅降低方差。</p>
+<p>直观上：</p>
+<ul>
+<li>Monte Carlo 更 “老实”，但噪声大；</li>
+<li>TD 更 “务实”，但依赖估计质量。</li>
+</ul>
+<p>强化学习里很多方法本质上都是在这两者之间找平衡。</p>
+<hr>
+<h2 id="10-dqn-在做什么"><a class="markdownIt-Anchor" href="#10-dqn-在做什么">#</a> 10. DQN 在做什么</h2>
+<p>你之前项目里走过 DQN 路线，所以必须真正理解它，而不是只知道 “它不适合”。</p>
+<h3 id="101-q-learning-的核心"><a class="markdownIt-Anchor" href="#101-q-learning-的核心">#</a> 10.1 Q-learning 的核心</h3>
+<p>Q-learning 想学一个最优动作价值函数 (Q^*(s,a))。</p>
+<p>Bellman 最优方程写成：</p>
+<p>[<br>
+Q^<em>(s,a) = \mathbb{E}\left[r + \gamma \max_{a’}Q^</em>(s’, a’)\right]<br>
+]</p>
+<p>这意味着：</p>
+<ul>
+<li>当前动作价值 = 当前奖励 + 下一状态最优动作价值。</li>
+</ul>
+<h3 id="102-dqn"><a class="markdownIt-Anchor" href="#102-dqn">#</a> 10.2 DQN</h3>
+<p>DQN 用神经网络近似 (Q (s,a))，更新目标近似为：</p>
+<p>[<br>
+y = r + \gamma \max_{a’} Q_{\text{target}}(s’,a’)<br>
+]</p>
+<p>然后最小化：</p>
+<p>[<br>
+\mathcal{L} = \left(Q_{\text{eval}}(s,a) - y\right)^2<br>
+]</p>
+<p>为稳定训练，DQN 常见工程技巧包括：</p>
+<ul>
+<li>replay buffer；</li>
+<li>target network；</li>
+<li>Double DQN；</li>
+<li>Dueling；</li>
+<li>reward clip；</li>
+<li>action mask。</li>
+</ul>
+<p>这些你在本项目旧路线里都碰到过。</p>
+<h3 id="103-dqn-为什么在这个项目里吃力"><a class="markdownIt-Anchor" href="#103-dqn-为什么在这个项目里吃力">#</a> 10.3 DQN 为什么在这个项目里吃力</h3>
+<p>不是说 DQN 完全不能学，而是当前问题结构对它很不友好。</p>
+<p>原因有五个。</p>
+<h4 id="原因-1多智能体-对手非平稳"><a class="markdownIt-Anchor" href="#原因-1多智能体-对手非平稳">#</a> 原因 1：多智能体 + 对手非平稳</h4>
+<p>当对手在动，或者己方多个 agent 同时影响局面时：</p>
+<ul>
+<li>“同一个观测 + 动作” 对应的长期后果更不稳定；</li>
+<li>Q 函数更难学稳。</li>
+</ul>
+<h4 id="原因-2部分可观测"><a class="markdownIt-Anchor" href="#原因-2部分可观测">#</a> 原因 2：部分可观测</h4>
+<p>单步观测看不见全局状态时：</p>
+<ul>
+<li>单步 Q 值缺少关键上下文；</li>
+<li>很多动作好坏要结合过去几步历史才能解释。</li>
+</ul>
+<h4 id="原因-3动作空间大而稀疏"><a class="markdownIt-Anchor" href="#原因-3动作空间大而稀疏">#</a> 原因 3：动作空间大而稀疏</h4>
+<p>这里每架飞机动作有  <code>336</code>  种。</p>
+<p>在 DQN 里：</p>
+<ul>
+<li>你要为每个动作都估一个 Q 值；</li>
+<li>很多动作大部分时间非法或无意义；</li>
+<li>这会让估计浪费容量，也让 argmax 更不稳定。</li>
+</ul>
+<h4 id="原因-4长时程信用分配"><a class="markdownIt-Anchor" href="#原因-4长时程信用分配">#</a> 原因 4：长时程信用分配</h4>
+<p>空战链条通常是：</p>
+<ul>
+<li>机动；</li>
+<li>探测；</li>
+<li>锁定；</li>
+<li>进入射程；</li>
+<li>开火；</li>
+<li>命中；</li>
+<li>赢局。</li>
+</ul>
+<p>从前面动作到最后结果，中间可能隔很多步。</p>
+<h4 id="原因-5课程迁移不一定成立"><a class="markdownIt-Anchor" href="#原因-5课程迁移不一定成立">#</a> 原因 5：课程迁移不一定成立</h4>
+<p><code>fix_rule_no_att</code>  学到的 “生存” 和 “得分” 能力，不一定能迁移到真实对抗。</p>
+<p>因为一旦对手会攻击，策略分布已经变了。</p>
+<hr>
+<h2 id="11-为什么转向-policy-gradient"><a class="markdownIt-Anchor" href="#11-为什么转向-policy-gradient">#</a> 11. 为什么转向 Policy Gradient</h2>
+<h3 id="111-最本质的区别"><a class="markdownIt-Anchor" href="#111-最本质的区别">#</a> 11.1 最本质的区别</h3>
+<p>DQN 的思路是：</p>
+<ul>
+<li>先学 “每个动作值多少钱”；</li>
+<li>再选值最大的动作。</li>
+</ul>
+<p>Policy Gradient 的思路是：</p>
+<ul>
+<li>直接学 “什么动作概率更大”。</li>
+</ul>
+<p>也就是：</p>
+<ul>
+<li>value-based：学价值，再间接出策略；</li>
+<li>policy-based：直接学策略。</li>
+</ul>
+<h3 id="112-reinforce-的直觉"><a class="markdownIt-Anchor" href="#112-reinforce-的直觉">#</a> 11.2 REINFORCE 的直觉</h3>
+<p>如果某条轨迹最后回报很好，那就应该：</p>
+<ul>
+<li>增大这条轨迹中那些动作出现的概率。</li>
+</ul>
+<p>如果回报很差，那就应该：</p>
+<ul>
+<li>减小这些动作的概率。</li>
+</ul>
+<p>这件事可写成经典策略梯度形式：</p>
+<h1 id="nabla_theta-jtheta"><a class="markdownIt-Anchor" href="#nabla_theta-jtheta">#</a> [<br>
+\nabla_\theta J(\theta)</h1>
+<p>\mathbb{E}\left[<br>
+\sum_t \nabla_\theta \log \pi_\theta(a_t \mid o_t) , G_t<br>
+\right]<br>
+]</p>
+<p>它的意思是：</p>
+<ul>
+<li>某个动作如果带来了高回报；</li>
+<li>就把它的 log-prob 往上推。</li>
+</ul>
+<h3 id="113-为什么要减-baseline"><a class="markdownIt-Anchor" href="#113-为什么要减-baseline">#</a> 11.3 为什么要减 baseline</h3>
+<p>如果直接用 (G_t)，方差通常很大。</p>
+<p>所以常见做法是减去一个 baseline (b_t)：</p>
+<h1 id="nabla_theta-jtheta-2"><a class="markdownIt-Anchor" href="#nabla_theta-jtheta-2">#</a> [<br>
+\nabla_\theta J(\theta)</h1>
+<p>\mathbb{E}\left[<br>
+\sum_t \nabla_\theta \log \pi_\theta(a_t \mid o_t) , (G_t - b_t)<br>
+\right]<br>
+]</p>
+<p>如果 baseline 选为价值函数 (V (o_t))，就得到 advantage：</p>
+<p>[<br>
+A_t \approx G_t - V(o_t)<br>
+]</p>
+<p>这样会更稳。</p>
+<hr>
+<h2 id="12-actor-critic为什么同时要策略和价值网络"><a class="markdownIt-Anchor" href="#12-actor-critic为什么同时要策略和价值网络">#</a> 12. Actor-Critic：为什么同时要策略和价值网络</h2>
+<p>Actor-Critic 可以理解为：</p>
+<ul>
+<li>Actor 负责 “做动作”；</li>
+<li>Critic 负责 “评价动作好不好”。</li>
+</ul>
+<p>在共享 backbone 的实现里，通常是：</p>
+<ul>
+<li>前面共享一个编码器；</li>
+<li>后面分出 policy head 和 value head。</li>
+</ul>
+<p>当前工程里实际上也是这个思路，只不过由  <code>Sample Factory</code>  的 actor-critic 框架承载。</p>
+<p>这样做的好处：</p>
+<ul>
+<li>Actor 得到 Critic 的低方差训练信号；</li>
+<li>Critic 通过 bootstrap 估计长期价值；</li>
+<li>整体比纯 REINFORCE 更稳。</li>
+</ul>
+<hr>
+<h2 id="13-ppo当前训练的核心算法"><a class="markdownIt-Anchor" href="#13-ppo当前训练的核心算法">#</a> 13. PPO：当前训练的核心算法</h2>
+<p>这部分必须吃透，因为你现在正式训练用的就是 PPO 家族。</p>
+<h3 id="131-为什么不能更新太猛"><a class="markdownIt-Anchor" href="#131-为什么不能更新太猛">#</a> 13.1 为什么不能更新太猛</h3>
+<p>策略梯度一个天然风险是：</p>
+<ul>
+<li>一次更新把策略改得太大；</li>
+<li>采样分布和训练分布迅速错位；</li>
+<li>性能会突然崩。</li>
+</ul>
+<p>PPO 的核心就是：</p>
+<ul>
+<li>允许更新；</li>
+<li>但不让每次更新跨太大步。</li>
+</ul>
+<h3 id="132-概率比值"><a class="markdownIt-Anchor" href="#132-概率比值">#</a> 13.2 概率比值</h3>
+<p>定义新旧策略比值：</p>
+<p>[<br>
+r_t(\theta)=\frac{\pi_\theta(a_t \mid o_t)}{\pi_{\theta_{\text{old}}}(a_t \mid o_t)}<br>
+]</p>
+<p>如果：</p>
+<ul>
+<li>(r_t&gt; 1)，说明新策略更偏爱这个动作；</li>
+<li>(r_t &lt; 1)，说明新策略更不偏爱这个动作。</li>
+</ul>
+<h3 id="133-ppo-的-clipped-objective"><a class="markdownIt-Anchor" href="#133-ppo-的-clipped-objective">#</a> 13.3 PPO 的 clipped objective</h3>
+<p>PPO 的关键目标函数是：</p>
+<p>[<br>
+L^{CLIP}(\theta) =<br>
+\mathbb{E}\left[<br>
+\min\left(<br>
+r_t(\theta) A_t,;<br>
+\text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t<br>
+\right)<br>
+\right]<br>
+]</p>
+<p>直观解释：</p>
+<ul>
+<li>当更新还在合理范围内，就正常鼓励；</li>
+<li>一旦概率改动过大，就把收益截住；</li>
+<li>防止策略暴冲。</li>
+</ul>
+<p>这就是 PPO 稳定性的核心来源。</p>
+<h3 id="134-ppo-的总损失"><a class="markdownIt-Anchor" href="#134-ppo-的总损失">#</a> 13.4 PPO 的总损失</h3>
+<p>实际训练时通常不只这一项，还包括：</p>
+<ul>
+<li>policy loss；</li>
+<li>value loss；</li>
+<li>entropy bonus。</li>
+</ul>
+<p>总目标常写成：</p>
+<h1 L="" id="mathcal"><a class="markdownIt-Anchor" href="#mathcal">#</a> [<br>
+\mathcal</h1>
+<p>\mathcal{L}<em value="">{policy}<br>
+c_v \mathcal{L}</em><br>
+c_e \mathcal{L}_{entropy}<br>
+]</p>
+<p>其中：</p>
+<ul>
+<li>value loss 帮 critic 学得准；</li>
+<li>entropy 帮策略别太快塌成完全确定性。</li>
+</ul>
+<hr>
+<h2 id="14-gae为什么要估-advantage"><a class="markdownIt-Anchor" href="#14-gae为什么要估-advantage">#</a> 14. GAE：为什么要估 Advantage</h2>
+<p>GAE 全称是 Generalized Advantage Estimation。</p>
+<p>它的目的非常实际：</p>
+<ul>
+<li>给 actor 一个质量不错、方差又别太大的 advantage 估计。</li>
+</ul>
+<p>先定义 TD residual：</p>
+<p>[<br>
+\delta_t = r_t + \gamma V(o_{t+1}) - V(o_t)<br>
+]</p>
+<p>GAE 把很多步 TD residual 衰减累加：</p>
+<h1 GAE(\gamma,\lambda)="" id="a_t"><a class="markdownIt-Anchor" href="#a_t">#</a> [<br>
+A_t^</h1>
+<p t+1="">\delta_t + \gamma \lambda \delta_</p>
+<ul>
+<li>(\gamma \lambda)^2 \delta_{t+2} + \cdots<br>
+]</li>
+</ul>
+<p>其中 (\lambda) 控制：</p>
+<ul>
+<li>更像 TD；</li>
+<li>还是更像 Monte Carlo。</li>
+</ul>
+<p>直觉上：</p>
+<ul>
+<li>(\lambda) 小一点，方差小、偏差大；</li>
+<li>(\lambda) 大一点，偏差小、方差大。</li>
+</ul>
+<p>当前默认里：</p>
+<ul>
+<li><code>gamma = 0.995</code></li>
+<li><code>gae_lambda = 0.95</code> （由 Sample Factory 默认提供）</li>
+</ul>
+<p>这是一组比较常见的长时程任务配置。</p>
+<hr>
+<h2 id="15-appo-和-v-trace为什么你现在不是纯-ppo"><a class="markdownIt-Anchor" href="#15-appo-和-v-trace为什么你现在不是纯-ppo">#</a> 15. APPO 和 V-trace：为什么你现在不是纯 PPO</h2>
+<p>当前工程训练命令里用的是：</p>
+<ul>
+<li><code>--algo=APPO</code></li>
+<li><code>--with_vtrace=True</code></li>
+</ul>
+<p>这意味着你实际跑的是异步 PPO 风格训练。</p>
+<h3 id="151-appo-的动机"><a class="markdownIt-Anchor" href="#151-appo-的动机">#</a> 15.1 APPO 的动机</h3>
+<p>为了提高吞吐，通常会：</p>
+<ul>
+<li>多个 actor 并行采样；</li>
+<li>learner 单独更新参数；</li>
+<li>两边异步工作。</li>
+</ul>
+<p>这样采样更快，但带来一个问题：</p>
+<ul>
+<li>actor 采样时用的是稍旧版本策略；</li>
+<li>learner 更新时策略已经变了。</li>
+</ul>
+<p>这叫 off-policy 偏移或 policy lag。</p>
+<h3 id="152-v-trace-在干什么"><a class="markdownIt-Anchor" href="#152-v-trace-在干什么">#</a> 15.2 V-trace 在干什么</h3>
+<p>V-trace 是一种重要性采样修正方法。</p>
+<p>你不用背完整推导，先记住一句：</p>
+<ul>
+<li>它在异步采样下，用来缓和 “数据来自旧策略” 带来的偏差。</li>
+</ul>
+<h3 id="153-max_policy_lag"><a class="markdownIt-Anchor" href="#153-max_policy_lag">#</a> 15.3  <code>max_policy_lag</code></h3>
+<p>当前默认：</p>
+<ul>
+<li><code>max_policy_lag = 15</code></li>
+</ul>
+<p>这表示：</p>
+<ul>
+<li>太旧的数据会被过滤掉，不参与训练。</li>
+</ul>
+<p>这是最近一轮实际训练经验得出的重要调整：</p>
+<ul>
+<li>之前设得更大时，虽然日志里平均 lag 没总打到上限；</li>
+<li>但 learner 积压严重时，旧样本风险会明显变大；</li>
+<li>所以现在把它收紧。</li>
+</ul>
+<hr>
+<h2 id="16-为什么这个项目必须重视部分可观测"><a class="markdownIt-Anchor" href="#16-为什么这个项目必须重视部分可观测">#</a> 16. 为什么这个项目必须重视部分可观测</h2>
+<p>这个问题不是 “可观测有点差”，而是 “本质上部分可观测”。</p>
+<p>原因包括：</p>
+<ul>
+<li>只能看到局部战场信息；</li>
+<li>目标可能刚刚消失在当前观测里；</li>
+<li>导弹、锁定、接敌窗口都有明显时序性；</li>
+<li>当前一步的最优动作往往依赖过去几步历史。</li>
+</ul>
+<p>这意味着：</p>
+<ul>
+<li>单帧卷积不够；</li>
+<li>必须给模型某种记忆。</li>
+</ul>
+<p>所以当前正式基线使用：</p>
+<ul>
+<li><code>use_rnn=True</code></li>
+<li><code>rnn_type=lstm</code></li>
+<li><code>hidden_size=256</code></li>
+</ul>
+<p>LSTM 的作用不是 “让网络更高级”，而是让它在隐状态里记住：</p>
+<ul>
+<li>刚才看到过谁；</li>
+<li>最近几步自己是怎么机动的；</li>
+<li>目标是否刚进入射程；</li>
+<li>当前交战窗口大概有没有形成。</li>
+</ul>
+<hr>
+<h2 id="17-为什么是共享策略而不是每机一套网络"><a class="markdownIt-Anchor" href="#17-为什么是共享策略而不是每机一套网络">#</a> 17. 为什么是共享策略而不是每机一套网络</h2>
+<p>你完全可以想象给每架飞机一套独立网络，但当前工程没有这么做。</p>
+<p>原因很现实。</p>
+<h3 id="171-参数量"><a class="markdownIt-Anchor" href="#171-参数量">#</a> 17.1 参数量</h3>
+<p>10 套独立策略意味着：</p>
+<ul>
+<li>显存占用更大；</li>
+<li>训练样本更稀；</li>
+<li>更容易出现某些 agent 学得快、某些学得慢。</li>
+</ul>
+<h3 id="172-对称性"><a class="markdownIt-Anchor" href="#172-对称性">#</a> 17.2 对称性</h3>
+<p>同类战斗机在很多规则上是对称的。</p>
+<p>共享策略意味着：</p>
+<ul>
+<li>“会打仗的规则” 可以在不同飞机之间复用；</li>
+<li>学到的是角色通用行为，而不是单机特化行为。</li>
+</ul>
+<h3 id="173-工程稳定性"><a class="markdownIt-Anchor" href="#173-工程稳定性">#</a> 17.3 工程稳定性</h3>
+<p>单卡  <code>RTX 4060 8GB</code>  下，共享策略更稳妥。</p>
+<p>所以当前路线属于：</p>
+<ul>
+<li>参数共享；</li>
+<li>执行时多 agent 并行；</li>
+<li>但不是 centralized critic 那种更重的结构。</li>
+</ul>
+<hr>
+<h2 id="18-为什么动作-mask-在这个项目里特别重要"><a class="markdownIt-Anchor" href="#18-为什么动作-mask-在这个项目里特别重要">#</a> 18. 为什么动作 mask 在这个项目里特别重要</h2>
+<h3 id="181-问题根源"><a class="markdownIt-Anchor" href="#181-问题根源">#</a> 18.1 问题根源</h3>
+<p>动作空间有  <code>336</code>  个，但很多时刻真正合法的动作只有很少一部分。</p>
+<p>例如：</p>
+<ul>
+<li>没有目标；</li>
+<li>目标不在射程；</li>
+<li>没有对应导弹；</li>
+<li>飞机已死亡。</li>
+</ul>
+<p>如果不做 mask，会怎样？</p>
+<ul>
+<li>策略会把很多概率浪费在根本不可能执行的动作上；</li>
+<li>训练容量被无效动作吞掉；</li>
+<li>log-prob、entropy 也会被这些坏动作污染。</li>
+</ul>
+<h3 id="182-当前工程怎么做"><a class="markdownIt-Anchor" href="#182-当前工程怎么做">#</a> 18.2 当前工程怎么做</h3>
+<p>当前项目里动作 mask 有两层。</p>
+<p>第一层，环境侧生成合法动作：</p>
+<ul>
+<li>文件： <code>fighter_action_utils.py</code></li>
+<li>核心函数： <code>build_valid_action_masks</code></li>
+</ul>
+<p>它根据：</p>
+<ul>
+<li>剩余长程导弹数量；</li>
+<li>剩余短程导弹数量；</li>
+<li>当前目标距离；</li>
+<li>当前目标 id；</li>
+</ul>
+<p>生成一个长度为  <code>336</code>  的二值 mask。</p>
+<p>第二层，策略侧真正使用这个 mask：</p>
+<ul>
+<li>文件： <code>scripts/train_sf_maca.py</code></li>
+<li>方法：在  <code>Sample Factory</code>  的 actor-critic forward 里，把非法动作 logits 设成极小值  <code>-1e9</code></li>
+</ul>
+<p>也就是：</p>
+<p>[<br>
+\text<ruby>logits}_{masked} =
+\begin {cases}
+\text {logits}, &amp; \text {合法}\\
+-10<rp>【</rp><rt>9, &amp; \text {非法</rt><rp>】</rp></ruby><br>
+\end{cases}<br>
+]</p>
+<p>这样 softmax 之后，非法动作概率几乎为零。</p>
+<h3 id="183-为什么还保留环境侧-fallback"><a class="markdownIt-Anchor" href="#183-为什么还保留环境侧-fallback">#</a> 18.3 为什么还保留环境侧 fallback</h3>
+<p>尽管策略层已经 mask 了，环境侧仍然保留一个安全修正：</p>
+<ul>
+<li>如果收到非法动作，不让环境崩；</li>
+<li>优先退化成同航向 no-op 攻击；</li>
+<li>再不行就选一个合法动作。</li>
+</ul>
+<p>这是工程上的双保险。</p>
+<hr>
+<h2 id="19-奖励设计为什么这是最容易学偏的地方"><a class="markdownIt-Anchor" href="#19-奖励设计为什么这是最容易学偏的地方">#</a> 19. 奖励设计：为什么这是最容易学偏的地方</h2>
+<p>强化学习里最常见的问题不是 “模型太弱”，而是 “目标信号给歪了”。</p>
+<h3 id="191-奖励不是事实而是训练接口"><a class="markdownIt-Anchor" href="#191-奖励不是事实而是训练接口">#</a> 19.1 奖励不是事实，而是训练接口</h3>
+<p>奖励不是世界真理。</p>
+<p>它只是你告诉 agent：</p>
+<ul>
+<li>什么值得追求；</li>
+<li>什么值得避免。</li>
+</ul>
+<p>如果这个接口设计得不好，模型会去钻空子。</p>
+<p>这叫 reward hacking。</p>
+<h3 id="192-当前这套奖励为什么比之前更合理"><a class="markdownIt-Anchor" href="#192-当前这套奖励为什么比之前更合理">#</a> 19.2 当前这套奖励为什么比之前更合理</h3>
+<p>我们已经做过一轮重要修正：</p>
+<ul>
+<li><code>reward_strike_act_valid = 100</code>  改成了  <code>0</code></li>
+<li><code>reward_draw = -1500</code>  改成了  <code>-500</code></li>
+</ul>
+<p>为什么？</p>
+<p>因为之前：</p>
+<ul>
+<li>合法开火本身就拿很大正奖励；</li>
+<li>可能鼓励 “只要能打就乱打”；</li>
+<li>反而削弱了赢局这个真正目标。</li>
+</ul>
+<p>现在更合理的逻辑是：</p>
+<ul>
+<li>是否开火由 “命中 / 打空 / 输赢后果” 来决定；</li>
+<li>不额外奖励 “只是执行了一个合法开火动作”。</li>
+</ul>
+<h3 id="193-reward-scale-和-clip-的耦合"><a class="markdownIt-Anchor" href="#193-reward-scale-和-clip-的耦合">#</a> 19.3 reward scale 和 clip 的耦合</h3>
+<p>当前默认：</p>
+<ul>
+<li><code>reward_scale = 0.005</code></li>
+<li><code>reward_clip = 30.0</code></li>
+</ul>
+<p>这组参数必须一起看。</p>
+<p>如果 scale 太大，而 clip 太小，会发生什么？</p>
+<ul>
+<li><code>win</code>  和  <code>totally_win</code>  都可能被裁到同一个上限；</li>
+<li>critic 看不出两者差异；</li>
+<li>终局目标层级变差。</li>
+</ul>
+<p>所以现在这组值是刻意配合过的。</p>
+<hr>
+<h2 id="20-当前项目为什么不再以-dqn-为主线"><a class="markdownIt-Anchor" href="#20-当前项目为什么不再以-dqn-为主线">#</a> 20. 当前项目为什么不再以 DQN 为主线</h2>
+<p>一句话总结：</p>
+<ul>
+<li>不是 DQN 完全错；</li>
+<li>而是这类问题对 policy-gradient 路线更自然。</li>
+</ul>
+<p>更完整的说法是：</p>
+<p>这个项目同时具有：</p>
+<ul>
+<li>多智能体；</li>
+<li>部分可观测；</li>
+<li>大离散动作空间；</li>
+<li>长时程信用分配；</li>
+<li>非平稳对手；</li>
+<li>明显动作合法性约束。</li>
+</ul>
+<p>这些特点叠加在一起后，value-based 路线的训练稳定性压力会非常大。</p>
+<p>因此当前主线切换到：</p>
+<ul>
+<li><code>Sample Factory</code></li>
+<li><code>APPO / PPO</code></li>
+<li><code>LSTM</code></li>
+<li>共享策略</li>
+<li>policy-level action masking</li>
+</ul>
+<hr>
+<h2 id="21-这套工程里的代码结构应该怎么理解"><a class="markdownIt-Anchor" href="#21-这套工程里的代码结构应该怎么理解">#</a> 21. 这套工程里的代码结构应该怎么理解</h2>
+<p>下面按 “数据流” 而不是 “目录树” 来理解。</p>
+<h3 id="211-原始环境层"><a class="markdownIt-Anchor" href="#211-原始环境层">#</a> 21.1 原始环境层</h3>
+<p><code>MaCA</code>  原始环境本体仍然负责：</p>
+<ul>
+<li>推演战场；</li>
+<li>接收红蓝动作；</li>
+<li>返回原始观测和 reward。</li>
+</ul>
+<h3 id="212-并行多智能体包装层"><a class="markdownIt-Anchor" href="#212-并行多智能体包装层">#</a> 21.2 并行多智能体包装层</h3>
+<p>文件： <code>marl_env/maca_parallel_env.py</code></p>
+<p>它做的事情：</p>
+<ul>
+<li>只暴露红方战斗机作为学习 agent；</li>
+<li>把观测整理成每个 agent 一个 dict；</li>
+<li>为每个 agent 构造 reward、termination、truncation、info；</li>
+<li>生成 action mask；</li>
+<li>对死掉的飞机保留固定槽位，而不是直接删掉。</li>
+</ul>
+<p>这里的设计非常重要，因为很多 RL 框架都希望：</p>
+<ul>
+<li>本局开始时 agent 数固定；</li>
+<li>中途不要乱变。</li>
+</ul>
+<h3 id="213-sample-factory-适配层"><a class="markdownIt-Anchor" href="#213-sample-factory-适配层">#</a> 21.3 Sample Factory 适配层</h3>
+<p>文件： <code>marl_env/sample_factory_env.py</code></p>
+<p>它把上一层包装成  <code>Sample Factory 1.x</code>  需要的 API。</p>
+<p>这里主要做了：</p>
+<ul>
+<li>把  <code>screen</code>  调整成  <code>CHW</code> ；</li>
+<li>把  <code>info</code>  归一化成  <code>measurements</code> ；</li>
+<li>暴露  <code>action_mask</code> ；</li>
+<li>暴露  <code>is_alive</code> ；</li>
+<li>统计  <code>invalid_action_frac</code> 、 <code>true_reward</code> 、 <code>win_flag</code>  等日志指标。</li>
+</ul>
+<h3 id="214-自定义编码器"><a class="markdownIt-Anchor" href="#214-自定义编码器">#</a> 21.4 自定义编码器</h3>
+<p>文件： <code>marl_env/sample_factory_model.py</code></p>
+<p>当前编码器是：</p>
+<ul>
+<li>CNN 编码  <code>obs</code></li>
+<li>MLP 编码  <code>measurements + is_alive</code></li>
+<li>两者拼接后进入后续 actor-critic</li>
+</ul>
+<p>这是一个典型的 “多模态轻量编码器” 设计。</p>
+<h3 id="215-环境注册和默认参数"><a class="markdownIt-Anchor" href="#215-环境注册和默认参数">#</a> 21.5 环境注册和默认参数</h3>
+<p>文件： <code>marl_env/sample_factory_registration.py</code></p>
+<p>这里定义了当前正式基线默认值，例如：</p>
+<ul>
+<li><code>hidden_size = 256</code></li>
+<li><code>rollout = 32</code></li>
+<li><code>recurrence = 32</code></li>
+<li><code>batch_size = 512</code></li>
+<li><code>num_workers = 4</code></li>
+<li><code>learning_rate = 2e-5</code></li>
+<li><code>reward_scale = 0.005</code></li>
+<li><code>reward_clip = 30.0</code></li>
+<li><code>ppo_epochs = 4</code></li>
+<li><code>max_policy_lag = 15</code></li>
+<li><code>exploration_loss_coeff = 0.01</code></li>
+</ul>
+<h3 id="216-训练入口"><a class="markdownIt-Anchor" href="#216-训练入口">#</a> 21.6 训练入口</h3>
+<p>文件： <code>scripts/train_sf_maca.py</code></p>
+<p>这里做了三类工作：</p>
+<ol>
+<li>调  <code>Sample Factory</code>  官方训练入口；</li>
+<li>加兼容性补丁；</li>
+<li>加本项目需要的策略级动作 mask 补丁。</li>
+</ol>
+<p>兼容性补丁包括：</p>
+<ul>
+<li>checkpoint 临时文件名保存兼容；</li>
+<li>单轨迹 batch 的 squeeze 问题修复；</li>
+<li>action mask 注入。</li>
+</ul>
+<h3 id="217-启动脚本"><a class="markdownIt-Anchor" href="#217-启动脚本">#</a> 21.7 启动脚本</h3>
+<p>文件：</p>
+<ul>
+<li><code>scripts/run_sf_maca_gpu_smoke.sh</code></li>
+<li><code>scripts/run_sf_maca_4060_baseline.sh</code></li>
+</ul>
+<p>前者用来证明：</p>
+<ul>
+<li>环境能起；</li>
+<li>模型能前向；</li>
+<li>learner 能更新；</li>
+<li>checkpoint 能保存。</li>
+</ul>
+<p>后者才是正式长训基线。</p>
+<h3 id="218-评估脚本"><a class="markdownIt-Anchor" href="#218-评估脚本">#</a> 21.8 评估脚本</h3>
+<p>文件： <code>scripts/eval_sf_maca.py</code></p>
+<p>它负责：</p>
+<ul>
+<li>加载已有 experiment；</li>
+<li>加载最新 checkpoint；</li>
+<li>跑固定局数评估；</li>
+<li>输出  <code>win_rate</code> 、 <code>round_reward_mean</code> 、 <code>true_reward_mean</code> 、 <code>invalid_action_frac_mean</code> 。</li>
+</ul>
+<p>这比只盯训练 reward 曲线靠谱得多。</p>
+<hr>
+<h2 id="22-一条完整训练数据流到底怎么走"><a class="markdownIt-Anchor" href="#22-一条完整训练数据流到底怎么走">#</a> 22. 一条完整训练数据流到底怎么走</h2>
+<p>把整套流程串起来。</p>
+<h3 id="第-1-步actor-采样"><a class="markdownIt-Anchor" href="#第-1-步actor-采样">#</a> 第 1 步：actor 采样</h3>
+<p>环境当前给出：</p>
+<ul>
+<li><code>obs</code></li>
+<li><code>measurements</code></li>
+<li><code>action_mask</code></li>
+<li><code>is_alive</code></li>
+</ul>
+<h3 id="第-2-步策略前向"><a class="markdownIt-Anchor" href="#第-2-步策略前向">#</a> 第 2 步：策略前向</h3>
+<p>编码器把观测变成特征。</p>
+<p>然后 actor-critic 输出：</p>
+<ul>
+<li>value 估计；</li>
+<li>action logits。</li>
+</ul>
+<p>接着把  <code>action_mask</code>  作用到 logits 上。</p>
+<h3 id="第-3-步动作采样并执行"><a class="markdownIt-Anchor" href="#第-3-步动作采样并执行">#</a> 第 3 步：动作采样并执行</h3>
+<p>策略从 masked distribution 中采样动作。</p>
+<p>环境再做一次安全兜底修正，最后推进仿真。</p>
+<h3 id="第-4-步收集轨迹"><a class="markdownIt-Anchor" href="#第-4-步收集轨迹">#</a> 第 4 步：收集轨迹</h3>
+<p>actor worker 不断把：</p>
+<ul>
+<li>观测；</li>
+<li>动作；</li>
+<li>log-prob；</li>
+<li>value；</li>
+<li>reward；</li>
+<li>done；</li>
+</ul>
+<p>等信息写入轨迹 buffer。</p>
+<h3 id="第-5-步learner-更新"><a class="markdownIt-Anchor" href="#第-5-步learner-更新">#</a> 第 5 步：learner 更新</h3>
+<p>learner 收到一批 rollout 后：</p>
+<ul>
+<li>计算 advantage；</li>
+<li>计算 value target；</li>
+<li>做 PPO / APPO 更新；</li>
+<li>广播新参数给 policy worker。</li>
+</ul>
+<h3 id="第-6-步周期性保存和评估"><a class="markdownIt-Anchor" href="#第-6-步周期性保存和评估">#</a> 第 6 步：周期性保存和评估</h3>
+<p>训练中会定期：</p>
+<ul>
+<li>保存 checkpoint；</li>
+<li>记录 summary；</li>
+<li>后续可以用评估脚本做 fixed-opponent evaluation。</li>
+</ul>
+<hr>
+<h2 id="23-当前正式基线超参数应该怎么理解"><a class="markdownIt-Anchor" href="#23-当前正式基线超参数应该怎么理解">#</a> 23. 当前正式基线超参数应该怎么理解</h2>
+<p>下面不是 “神秘魔法数字”，而是你应该能用语言解释的东西。</p>
+<h3 id="231-num_workers-4"><a class="markdownIt-Anchor" href="#231-num_workers-4">#</a> 23.1  <code>num_workers = 4</code></h3>
+<p>为什么不是越大越好？</p>
+<p>因为更多 worker 意味着：</p>
+<ul>
+<li>更高采样吞吐；</li>
+<li>但也可能让 learner 来不及吃数据。</li>
+</ul>
+<p>最近一轮实验已经出现 learner 积压严重，所以现在从  <code>6</code>  下调到  <code>4</code> 。</p>
+<h3 id="232-rollout-32"><a class="markdownIt-Anchor" href="#232-rollout-32">#</a> 23.2  <code>rollout = 32</code></h3>
+<p>rollout 太短的问题是：</p>
+<ul>
+<li>时序上下文太碎；</li>
+<li>长时程信用分配更弱。</li>
+</ul>
+<p>rollout 太长的问题是：</p>
+<ul>
+<li>buffer 更大；</li>
+<li>learner 压力更高；</li>
+<li>单次更新更慢。</li>
+</ul>
+<p><code>32</code>  是当前在单卡上的折中。</p>
+<h3 id="233-recurrence-32"><a class="markdownIt-Anchor" href="#233-recurrence-32">#</a> 23.3  <code>recurrence = 32</code></h3>
+<p>既然用了  <code>LSTM</code> ，就必须关心 BPTT 长度。</p>
+<p>这里设成和 rollout 一样，意味着：</p>
+<ul>
+<li>反向传播能穿过整个 rollout。</li>
+</ul>
+<h3 id="234-batch_size-512"><a class="markdownIt-Anchor" href="#234-batch_size-512">#</a> 23.4  <code>batch_size = 512</code></h3>
+<p>批量太小：</p>
+<ul>
+<li>梯度噪声大；</li>
+<li>更新不稳。</li>
+</ul>
+<p>批量太大：</p>
+<ul>
+<li>显存和吞吐压力上去；</li>
+<li>learner 更容易成为瓶颈。</li>
+</ul>
+<h3 id="235-ppo_epochs-4"><a class="markdownIt-Anchor" href="#235-ppo_epochs-4">#</a> 23.5  <code>ppo_epochs = 4</code></h3>
+<p>PPO 不是一批样本只用一次。</p>
+<p>如果 epoch 太少：</p>
+<ul>
+<li>样本利用率低。</li>
+</ul>
+<p>如果太多：</p>
+<ul>
+<li>容易对旧样本过拟合；</li>
+<li>也会增加 policy lag 风险。</li>
+</ul>
+<p>当前  <code>4</code>  是比较经典的起点。</p>
+<h3 id="236-learning_rate-2e-5"><a class="markdownIt-Anchor" href="#236-learning_rate-2e-5">#</a> 23.6  <code>learning_rate = 2e-5</code></h3>
+<p>最近一轮从  <code>5e-5</code>  降到  <code>2e-5</code> ，是因为：</p>
+<ul>
+<li>已经学到一些有价值的策略；</li>
+<li>此时更怕大步更新把好区域冲掉。</li>
+</ul>
+<h3 id="237-gamma-0995"><a class="markdownIt-Anchor" href="#237-gamma-0995">#</a> 23.7  <code>gamma = 0.995</code></h3>
+<p>这体现出任务是长时程决策。</p>
+<p>如果 (\gamma) 太小，就会更短视。</p>
+<h3 id="238-exploration_loss_coeff-001"><a class="markdownIt-Anchor" href="#238-exploration_loss_coeff-001">#</a> 23.8  <code>exploration_loss_coeff = 0.01</code></h3>
+<p>这是熵正则项权重。</p>
+<p>太小会怎样？</p>
+<ul>
+<li>策略太快变得接近确定性；</li>
+<li>早早停止探索。</li>
+</ul>
+<h3 id="239-max_policy_lag-15"><a class="markdownIt-Anchor" href="#239-max_policy_lag-15">#</a> 23.9  <code>max_policy_lag = 15</code></h3>
+<p>这是异步训练里非常关键的稳定性参数。</p>
+<p>它的目标不是 “越小越好”，而是：</p>
+<ul>
+<li>尽量少吃太旧的数据；</li>
+<li>但又不要把样本扔得太多。</li>
+</ul>
+<h3 id="2310-reward_scale-0005-和-reward_clip-30"><a class="markdownIt-Anchor" href="#2310-reward_scale-0005-和-reward_clip-30">#</a> 23.10  <code>reward_scale = 0.005</code>  和  <code>reward_clip = 30</code></h3>
+<p>这两者必须联动理解，前面已经解释过。</p>
+<hr>
+<h2 id="24-当前模型结构应该怎么理解"><a class="markdownIt-Anchor" href="#24-当前模型结构应该怎么理解">#</a> 24. 当前模型结构应该怎么理解</h2>
+<h3 id="241-cnn-部分"><a class="markdownIt-Anchor" href="#241-cnn-部分">#</a> 24.1 CNN 部分</h3>
+<p><code>sample_factory_model.py</code>  里当前图像编码是三层卷积：</p>
+<ul>
+<li><code>5 -&gt; 16</code></li>
+<li><code>16 -&gt; 32</code></li>
+<li><code>32 -&gt; 48</code></li>
+</ul>
+<p>每层都做 stride 下采样。</p>
+<p>直觉上：</p>
+<ul>
+<li>前层提局部纹理；</li>
+<li>中层提更高层局部结构；</li>
+<li>后层压缩成更适合决策的特征图。</li>
+</ul>
+<h3 id="242-measurement-mlp"><a class="markdownIt-Anchor" href="#242-measurement-mlp">#</a> 24.2 Measurement MLP</h3>
+<p>长度为  <code>6</code>  的向量不能直接丢掉，因为它包含了高度决策相关的信息，例如：</p>
+<ul>
+<li>导弹剩余；</li>
+<li>目标距离；</li>
+<li>目标 id；</li>
+</ul>
+<p>所以单独用两层 MLP 编码，再和图像特征拼接。</p>
+<h3 id="243-为什么没有做得更大"><a class="markdownIt-Anchor" href="#243-为什么没有做得更大">#</a> 24.3 为什么没有做得更大</h3>
+<p>不是因为更大一定没用，而是因为：</p>
+<ul>
+<li>当前目标先是建立稳定 baseline；</li>
+<li>算力是  <code>4060 8GB</code> ；</li>
+<li>工程上先要稳定可迭代。</li>
+</ul>
+<hr>
+<h2 id="25-训练日志应该怎么看"><a class="markdownIt-Anchor" href="#25-训练日志应该怎么看">#</a> 25. 训练日志应该怎么看</h2>
+<p>这是最容易从 “看热闹” 变成 “看门道” 的地方。</p>
+<h3 id="251-第一层系统有没有正常起"><a class="markdownIt-Anchor" href="#251-第一层系统有没有正常起">#</a> 25.1 第一层：系统有没有正常起</h3>
+<p>先看：</p>
+<ul>
+<li>env 是否初始化成功；</li>
+<li>learner 是否初始化成功；</li>
+<li>policy worker 是否初始化成功；</li>
+<li>checkpoint 是否能保存。</li>
+</ul>
+<p>如果这里都没过，别讨论算法效果。</p>
+<h3 id="252-第二层是不是在用-gpu"><a class="markdownIt-Anchor" href="#252-第二层是不是在用-gpu">#</a> 25.2 第二层：是不是在用 GPU</h3>
+<p>不要被单独一行  <code>Queried available GPUs: 0</code>  吓到。</p>
+<p>真正要看的是 learner /policy worker 里有没有：</p>
+<ul>
+<li><code>Set environment var CUDA_VISIBLE_DEVICES to '0'</code></li>
+<li><code>Visible devices: 1</code></li>
+<li><code>GPU learner timing: ...</code></li>
+</ul>
+<p>这几行才说明实际训练进程看到了 GPU。</p>
+<h3 id="253-第三层learner-是不是瓶颈"><a class="markdownIt-Anchor" href="#253-第三层learner-是不是瓶颈">#</a> 25.3 第三层：learner 是不是瓶颈</h3>
+<p>如果日志反复出现：</p>
+<ul>
+<li><code>Learner ... accumulated too much experience</code></li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>actor 采样太快；</li>
+<li>learner 来不及更新；</li>
+<li>policy lag 风险会上升。</li>
+</ul>
+<p>这时应该优先考虑：</p>
+<ul>
+<li>降  <code>num_workers</code> ；</li>
+<li>降学习复杂度；</li>
+<li>或重新平衡批量与网络大小。</li>
+</ul>
+<h3 id="254-第四层任务表现是不是在变好"><a class="markdownIt-Anchor" href="#254-第四层任务表现是不是在变好">#</a> 25.4 第四层：任务表现是不是在变好</h3>
+<p>常见可看指标：</p>
+<ul>
+<li><code>Avg episode reward</code></li>
+<li>evaluation 的  <code>win_rate</code></li>
+<li><code>round_reward_mean</code></li>
+<li><code>true_reward_mean</code></li>
+<li><code>invalid_action_frac_mean</code></li>
+</ul>
+<p>不要只看单点峰值，要看：</p>
+<ul>
+<li>滑动平均；</li>
+<li>最佳窗口；</li>
+<li>最后阶段；</li>
+<li>checkpoint 对应的表现。</li>
+</ul>
+<hr>
+<h2 id="26-为什么训练-reward-不等于真实战斗能力"><a class="markdownIt-Anchor" href="#26-为什么训练-reward-不等于真实战斗能力">#</a> 26. 为什么训练 reward 不等于真实战斗能力</h2>
+<p>这点一定要反复提醒自己。</p>
+<p>原因有三类。</p>
+<h3 id="261-奖励不是胜率"><a class="markdownIt-Anchor" href="#261-奖励不是胜率">#</a> 26.1 奖励不是胜率</h3>
+<p>训练 reward 是很多局部项的合成。</p>
+<p>它可能上升，但：</p>
+<ul>
+<li>只是更会存活；</li>
+<li>或更会刷局部奖励；</li>
+<li>但不一定更会赢。</li>
+</ul>
+<h3 id="262-训练对手固定会有过拟合"><a class="markdownIt-Anchor" href="#262-训练对手固定会有过拟合">#</a> 26.2 训练对手固定，会有过拟合</h3>
+<p>如果一直只打  <code>fix_rule</code> ：</p>
+<ul>
+<li>策略可能学到的是 “针对这个规则对手的特化行为”；</li>
+<li>不一定具有更强泛化。</li>
+</ul>
+<h3 id="263-ppo-曲线本来就有波动"><a class="markdownIt-Anchor" href="#263-ppo-曲线本来就有波动">#</a> 26.3 PPO 曲线本来就有波动</h3>
+<p>RL 不是监督学习那种平滑下降曲线。</p>
+<p>你会经常看到：</p>
+<ul>
+<li>上涨；</li>
+<li>回撤；</li>
+<li>再恢复；</li>
+<li>再波动。</li>
+</ul>
+<p>关键不是 “有没有波动”，而是：</p>
+<ul>
+<li>长期趋势；</li>
+<li>最佳窗口；</li>
+<li>评估是否实质变好。</li>
+</ul>
+<hr>
+<h2 id="27-resume-fresh-start-done-文件-env-step-上限"><a class="markdownIt-Anchor" href="#27-resume-fresh-start-done-文件-env-step-上限">#</a> 27. Resume、Fresh Start、Done 文件、Env Step 上限</h2>
+<p>这部分是最近工程里非常实际、也非常容易踩坑的知识。</p>
+<h3 id="271-什么时候是-resume"><a class="markdownIt-Anchor" href="#271-什么时候是-resume">#</a> 27.1 什么时候是 resume</h3>
+<p><code>Sample Factory</code>  用 experiment 名字识别实验目录。</p>
+<p>也就是说：</p>
+<ul>
+<li><code>EXP_NAME</code>  相同，才会加载原 experiment；</li>
+<li>名字不同，就一定新开目录从头训。</li>
+</ul>
+<h3 id="272-什么时候是-fresh-start"><a class="markdownIt-Anchor" href="#272-什么时候是-fresh-start">#</a> 27.2 什么时候是 fresh start</h3>
+<p>下面这些情况适合 fresh start：</p>
+<ul>
+<li>改了模型结构；</li>
+<li>改了观测结构；</li>
+<li>改了动作定义；</li>
+<li>想做严格对照实验。</li>
+</ul>
+<h3 id="273-done-文件的作用"><a class="markdownIt-Anchor" href="#273-done-文件的作用">#</a> 27.3  <code>done</code>  文件的作用</h3>
+<p>当实验达到训练目标后，目录里会留下  <code>done</code>  文件。</p>
+<p>如果不删它，再次启动同名 experiment 时会直接退出，并提示：</p>
+<ul>
+<li><code>Training already finished! Remove &quot;done&quot; file to continue training</code></li>
+</ul>
+<h3 id="274-train_for_env_steps-的坑"><a class="markdownIt-Anchor" href="#274-train_for_env_steps-的坑">#</a> 27.4  <code>train_for_env_steps</code>  的坑</h3>
+<p>恢复训练时， <code>Sample Factory</code>  会加载旧 checkpoint 中记录的  <code>env_steps</code> 。</p>
+<p>如果旧 checkpoint 已经是：</p>
+<ul>
+<li><code>50000899</code></li>
+</ul>
+<p>但你新的命令还是：</p>
+<ul>
+<li><code>--train_for_env_steps=50000000</code></li>
+</ul>
+<p>那它一恢复就已经达到上限，自然会马上结束。</p>
+<p>所以续训时一定要保证：</p>
+<p>[<br>
+\text {新的 train_for_env_steps} &gt; \text {当前 checkpoint 的 env_steps}<br>
+]</p>
+<p>这是最近一次真实踩坑总结出来的工程经验。</p>
+<hr>
+<h2 id="28-为什么必须做独立评估"><a class="markdownIt-Anchor" href="#28-为什么必须做独立评估">#</a> 28. 为什么必须做独立评估</h2>
+<p>当前工程已经有：</p>
+<ul>
+<li>训练脚本： <code>scripts/train_sf_maca.py</code></li>
+<li>评估脚本： <code>scripts/eval_sf_maca.py</code></li>
+</ul>
+<p>评估的重要性在于：</p>
+<ul>
+<li>训练 reward 曲线只是训练时的在线统计；</li>
+<li>checkpoint 谁更好，必须用固定条件重新测。</li>
+</ul>
+<p>建议每次长训后都做：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python scripts/eval_sf_maca.py \</span><br><span class="line">  --experiment=&lt;experiment_name&gt; \</span><br><span class="line">  --train_dir=train_dir/sample_factory \</span><br><span class="line">  --device=cpu \</span><br><span class="line">  --episodes=50 \</span><br><span class="line">  --maca_opponent=fix_rule \</span><br><span class="line">  --maca_max_step=1000</span><br></pre></td></tr></table></figure>
+<p>重点看：</p>
+<ul>
+<li><code>win_rate</code></li>
+<li><code>round_reward_mean</code></li>
+<li><code>true_reward_mean</code></li>
+<li><code>invalid_action_frac_mean</code></li>
+</ul>
+<p>其中：</p>
+<ul>
+<li><code>win_rate</code>  最接近最终目标；</li>
+<li><code>invalid_action_frac_mean</code>  能帮助判断 mask 是否真的在约束策略；</li>
+<li><code>true_reward_mean</code>  比局部平均更接近整局效果。</li>
+</ul>
+<hr>
+<h2 id="29-当前技术路线的真正逻辑"><a class="markdownIt-Anchor" href="#29-当前技术路线的真正逻辑">#</a> 29. 当前技术路线的真正逻辑</h2>
+<p>把整个项目压缩成一条主线。</p>
+<h3 id="第-1-步先把环境整理成现代-rl-框架能吃的形式"><a class="markdownIt-Anchor" href="#第-1-步先把环境整理成现代-rl-框架能吃的形式">#</a> 第 1 步：先把环境整理成现代 RL 框架能吃的形式</h3>
+<p>也就是：</p>
+<ul>
+<li>固定 agent 集；</li>
+<li>dict obs；</li>
+<li>per-agent reward；</li>
+<li>action mask；</li>
+<li>inactive agent handling。</li>
+</ul>
+<h3 id="第-2-步先证明系统工程链路通"><a class="markdownIt-Anchor" href="#第-2-步先证明系统工程链路通">#</a> 第 2 步：先证明系统工程链路通</h3>
+<p>也就是 smoke：</p>
+<ul>
+<li>能初始化；</li>
+<li>能前向；</li>
+<li>能更新；</li>
+<li>能保存 checkpoint。</li>
+</ul>
+<h3 id="第-3-步建立一个可持续跑的-baseline"><a class="markdownIt-Anchor" href="#第-3-步建立一个可持续跑的-baseline">#</a> 第 3 步：建立一个可持续跑的 baseline</h3>
+<p>这就是当前：</p>
+<ul>
+<li><code>Sample Factory</code></li>
+<li><code>APPO</code></li>
+<li><code>LSTM</code></li>
+<li>共享策略</li>
+<li><code>fix_rule</code></li>
+</ul>
+<h3 id="第-4-步建立评估闭环"><a class="markdownIt-Anchor" href="#第-4-步建立评估闭环">#</a> 第 4 步：建立评估闭环</h3>
+<p>也就是：</p>
+<ul>
+<li>不是只盯 reward；</li>
+<li>而是固定 checkpoint、固定对手、固定局数来比较。</li>
+</ul>
+<h3 id="第-5-步再谈更复杂增强"><a class="markdownIt-Anchor" href="#第-5-步再谈更复杂增强">#</a> 第 5 步：再谈更复杂增强</h3>
+<p>例如：</p>
+<ul>
+<li>opponent pool；</li>
+<li>self-play；</li>
+<li>更强 critic；</li>
+<li>centralized training；</li>
+<li>curriculum；</li>
+<li>reward 微调。</li>
+</ul>
+<p>如果 baseline 都不稳，这些高级技巧通常只会把问题复杂化。</p>
+<hr>
+<h2 id="30-一些常见误解"><a class="markdownIt-Anchor" href="#30-一些常见误解">#</a> 30. 一些常见误解</h2>
+<h3 id="误解-1能跑起来就等于模型方向对了"><a class="markdownIt-Anchor" href="#误解-1能跑起来就等于模型方向对了">#</a> 误解 1：能跑起来就等于模型方向对了</h3>
+<p>不对。</p>
+<p>系统工程打通，只代表：</p>
+<ul>
+<li>没有 shape 错；</li>
+<li>没有 multiprocessing 错；</li>
+<li>没有 CUDA 错；</li>
+<li>不代表策略真的在学对东西。</li>
+</ul>
+<h3 id="误解-2reward-上升就一定更会赢"><a class="markdownIt-Anchor" href="#误解-2reward-上升就一定更会赢">#</a> 误解 2：reward 上升就一定更会赢</h3>
+<p>不对。</p>
+<p>它可能只是更会：</p>
+<ul>
+<li>存活；</li>
+<li>拖时间；</li>
+<li>利用 shaping。</li>
+</ul>
+<h3 id="误解-3参数越大越强"><a class="markdownIt-Anchor" href="#误解-3参数越大越强">#</a> 误解 3：参数越大越强</h3>
+<p>不对。</p>
+<p>更大的网络和更大的 batch 往往也意味着：</p>
+<ul>
+<li>更慢；</li>
+<li>更难稳定；</li>
+<li>更容易让 learner 成为瓶颈。</li>
+</ul>
+<h3 id="误解-4动作-mask-做了环境兜底就够了"><a class="markdownIt-Anchor" href="#误解-4动作-mask-做了环境兜底就够了">#</a> 误解 4：动作 mask 做了环境兜底就够了</h3>
+<p>不对。</p>
+<p>环境兜底只能防止崩，<br>
+不能直接让策略学到 “哪些动作根本不该考虑”。</p>
+<p>所以当前项目已经把 mask 接到了 policy logits。</p>
+<h3 id="误解-5resume-就只是继续跑命令"><a class="markdownIt-Anchor" href="#误解-5resume-就只是继续跑命令">#</a> 误解 5：resume 就只是继续跑命令</h3>
+<p>不对。</p>
+<p>续训至少要同时检查：</p>
+<ul>
+<li><code>EXP_NAME</code>  是否一致；</li>
+<li><code>done</code>  文件是否删除；</li>
+<li><code>train_for_env_steps</code>  是否大于当前 checkpoint 的 env step。</li>
+</ul>
+<hr>
+<h2 id="31-建议你的学习顺序"><a class="markdownIt-Anchor" href="#31-建议你的学习顺序">#</a> 31. 建议你的学习顺序</h2>
+<p>如果你准备认真学，不要乱跳。</p>
+<h3 id="第一遍建立全局图景"><a class="markdownIt-Anchor" href="#第一遍建立全局图景">#</a> 第一遍：建立全局图景</h3>
+<p>只看这些章节：</p>
+<ul>
+<li>第 1 章到第 7 章；</li>
+<li>第 16 章到第 18 章；</li>
+<li>第 21 章到第 23 章；</li>
+<li>第 29 章。</li>
+</ul>
+<p>目标是回答：</p>
+<ul>
+<li>RL 在这个项目里到底是什么；</li>
+<li>当前系统到底怎么流动。</li>
+</ul>
+<h3 id="第二遍啃核心数学"><a class="markdownIt-Anchor" href="#第二遍啃核心数学">#</a> 第二遍：啃核心数学</h3>
+<p>重点看：</p>
+<ul>
+<li>第 8 章到第 15 章。</li>
+</ul>
+<p>目标是回答：</p>
+<ul>
+<li>value、advantage、GAE、PPO、V-trace 分别是什么；</li>
+<li>为什么要这样设计。</li>
+</ul>
+<h3 id="第三遍对照代码"><a class="markdownIt-Anchor" href="#第三遍对照代码">#</a> 第三遍：对照代码</h3>
+<p>边看边打开这些文件：</p>
+<ul>
+<li><code>marl_env/maca_parallel_env.py</code></li>
+<li><code>marl_env/sample_factory_env.py</code></li>
+<li><code>marl_env/sample_factory_model.py</code></li>
+<li><code>marl_env/sample_factory_registration.py</code></li>
+<li><code>scripts/train_sf_maca.py</code></li>
+<li><code>scripts/eval_sf_maca.py</code></li>
+<li><code>fighter_action_utils.py</code></li>
+<li><code>configuration/reward.py</code></li>
+</ul>
+<h3 id="第四遍训练和评估实操"><a class="markdownIt-Anchor" href="#第四遍训练和评估实操">#</a> 第四遍：训练和评估实操</h3>
+<p>去跑：</p>
+<ul>
+<li>smoke；</li>
+<li>baseline；</li>
+<li>evaluation；</li>
+<li>resume。</li>
+</ul>
+<p>然后再回来看第 25、27、28 章，你会理解得更深。</p>
+<hr>
+<h2 id="32-一份最小可执行的认知清单"><a class="markdownIt-Anchor" href="#32-一份最小可执行的认知清单">#</a> 32. 一份最小可执行的认知清单</h2>
+<p>如果你现在只想抓住最关键的东西，先记住下面这些。</p>
+<ol>
+<li>这个项目本质上是一个多智能体、部分可观测、长时程、大离散动作空间的决策问题。</li>
+<li>共享策略 +  <code>LSTM</code>  是当前算力条件下最现实的第一版结构。</li>
+<li>当前主算法不是 DQN，而是  <code>APPO/PPO</code> 。</li>
+<li><code>advantage</code>  是 “动作比平均水平好多少”。</li>
+<li>PPO 的核心是 “更新，但不要一次改太猛”。</li>
+<li><code>action_mask</code>  在这个项目里不是可选优化，而是核心必要条件。</li>
+<li>reward 设计决定了 “模型到底在学什么”。</li>
+<li>日志里 learner bottleneck 和 policy lag 比单个 reward 峰值更值得警惕。</li>
+<li>checkpoint 保留策略和固定评估循环是必须的，不是锦上添花。</li>
+<li>续训能不能接上，不只看 experiment 名，还要看  <code>done</code>  和  <code>train_for_env_steps</code> 。</li>
+</ol>
+<hr>
+<h2 id="33-一句话总结整条路线"><a class="markdownIt-Anchor" href="#33-一句话总结整条路线">#</a> 33. 一句话总结整条路线</h2>
+<p>当前这套工程不是 “随便拿 PPO 套上去”，而是：</p>
+<ul>
+<li>先把  <code>MaCA</code>  变成一个标准化、可并行、可 mask、可记录统计的多智能体环境；</li>
+<li>再用更适合长时程部分可观测任务的  <code>APPO + LSTM + 共享策略</code>  去训练；</li>
+<li>同时用 reward 设计、action masking、checkpoint 管理、固定评估和日志诊断，把它做成一个可持续迭代的 RL 工程。</li>
+</ul>
+<p>如果你真正读懂这份文档，再去看代码和日志，你会发现：</p>
+<ul>
+<li>那些看起来零散的 patch；</li>
+<li>那些看起来琐碎的参数；</li>
+<li>那些看起来麻烦的工程步骤；</li>
+</ul>
+<p>其实都在服务同一件事：</p>
+<ul>
+<li>让一个复杂的动态对抗决策问题，变成一个可以稳定学习、可以解释失败、可以逐步改进的系统。</li>
+</ul>
+
+      <div class="tags">
+          <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="ic i-tag"></i> 强化学习</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2026-04-11 14:55:02" itemprop="dateModified" datetime="2026-04-11T14:55:02+08:00">2026-04-11</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> 赞赏</button>
+  <p>请我喝[茶]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay_my.png" alt="RakuHan 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay_my.png" alt="RakuHan 支付宝">
+        <p>支付宝</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>RakuHan <i class="ic i-at"><em>@</em></i>らくハンの部屋
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://gtx6901.github.io/notes/MaCA_RL/" title="MaCA 强化学习从零到工程实践指南">https://gtx6901.github.io/notes/MaCA_RL/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/notes/Leetcode207/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;dlink.host&#x2F;1drv&#x2F;aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzhIN3NjUGlrQ1NyVTlXTGRfWnE1LUFTRlZET1BhN2VDcmVZXzRDWTFhdzVv.png" title="Leetcode随记-207课程表">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> 算法题</span>
+  <h3>Leetcode随记-207课程表</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#maca-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%BB%8E%E9%9B%B6%E5%88%B0%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text"> MaCA 强化学习从零到工程实践指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%85%88%E8%AF%B4%E4%B8%80%E5%8F%A5%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E8%AF%9D"><span class="toc-number">1.1.</span> <span class="toc-text"> 0. 先说一句最重要的话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%88%B0%E5%BA%95%E5%9C%A8%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.</span> <span class="toc-text"> 1. 这个项目到底在做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%88%E5%A4%8D%E4%B9%A0%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%AD%A6%E8%BF%87%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="toc-number">1.3.</span> <span class="toc-text"> 2. 先复习你已经学过的东西</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-%E7%8A%B6%E6%80%81-%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA-%E5%8F%8D%E9%A6%88"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 2.1 状态、输入、输出、反馈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E5%92%8C%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.2 代价函数和最优控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#23-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 2.3 梯度下降和参数优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#24-%E6%A6%82%E7%8E%87%E5%92%8C%E6%9C%9F%E6%9C%9B"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 2.4 概率和期望</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#25-%E5%81%8F%E5%B7%AE%E5%92%8C%E6%96%B9%E5%B7%AE"><span class="toc-number">1.3.5.</span> <span class="toc-text"> 2.5 偏差和方差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.4.</span> <span class="toc-text"> 3. 什么是强化学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%94%A8%E6%95%B0%E5%AD%A6%E8%AF%AD%E8%A8%80%E6%8A%8A-rl-%E5%BD%A2%E5%BC%8F%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text"> 4. 用数学语言把 RL 形式化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#41-mdp%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 4.1 MDP：马尔可夫决策过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#42-pomdp%E9%83%A8%E5%88%86%E5%8F%AF%E8%A7%82%E6%B5%8B-mdp"><span class="toc-number">1.5.2.</span> <span class="toc-text"> 4.2 POMDP：部分可观测 MDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#43-trajectory%E8%BD%A8%E8%BF%B9"><span class="toc-number">1.5.3.</span> <span class="toc-text"> 4.3 Trajectory：轨迹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#44-return%E5%9B%9E%E6%8A%A5"><span class="toc-number">1.5.4.</span> <span class="toc-text"> 4.4 Return：回报</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%A0%B8%E5%BF%83-rl-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.6.</span> <span class="toc-text"> 5. 这个项目中的核心 RL 概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#51-agent"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 5.1 Agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#52-environment"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 5.2 Environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#53-observation"><span class="toc-number">1.6.3.</span> <span class="toc-text"> 5.3 Observation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#54-action"><span class="toc-number">1.6.4.</span> <span class="toc-text"> 5.4 Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#55-reward"><span class="toc-number">1.6.5.</span> <span class="toc-text"> 5.5 Reward</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#56-episode"><span class="toc-number">1.6.6.</span> <span class="toc-text"> 5.6 Episode</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%BC%98%E5%8C%96%E7%9A%84%E7%9C%9F%E6%AD%A3%E7%9B%AE%E6%A0%87%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.7.</span> <span class="toc-text"> 6. 强化学习优化的真正目标是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-value-q-advantage-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.8.</span> <span class="toc-text"> 7. Value、Q、Advantage 到底是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#71-%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-number">1.8.1.</span> <span class="toc-text"> 7.1 状态价值函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#72-%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-number">1.8.2.</span> <span class="toc-text"> 7.2 动作价值函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#73-advantage"><span class="toc-number">1.8.3.</span> <span class="toc-text"> 7.3 Advantage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-bellman-%E6%96%B9%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88-rl-%E6%80%BB%E5%9C%A8%E9%80%92%E6%8E%A8"><span class="toc-number">1.9.</span> <span class="toc-text"> 8. Bellman 方程：为什么 RL 总在递推</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-monte-carlo-td-bootstrapping"><span class="toc-number">1.10.</span> <span class="toc-text"> 9. Monte Carlo、TD、Bootstrapping</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#91-monte-carlo"><span class="toc-number">1.10.1.</span> <span class="toc-text"> 9.1 Monte Carlo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#92-temporal-difference"><span class="toc-number">1.10.2.</span> <span class="toc-text"> 9.2 Temporal Difference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#93-bootstrapping"><span class="toc-number">1.10.3.</span> <span class="toc-text"> 9.3 Bootstrapping</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-dqn-%E5%9C%A8%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">1.11.</span> <span class="toc-text"> 10. DQN 在做什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#101-q-learning-%E7%9A%84%E6%A0%B8%E5%BF%83"><span class="toc-number">1.11.1.</span> <span class="toc-text"> 10.1 Q-learning 的核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#102-dqn"><span class="toc-number">1.11.2.</span> <span class="toc-text"> 10.2 DQN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#103-dqn-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E9%87%8C%E5%90%83%E5%8A%9B"><span class="toc-number">1.11.3.</span> <span class="toc-text"> 10.3 DQN 为什么在这个项目里吃力</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0-1%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93-%E5%AF%B9%E6%89%8B%E9%9D%9E%E5%B9%B3%E7%A8%B3"><span class="toc-number">1.11.3.1.</span> <span class="toc-text"> 原因 1：多智能体 + 对手非平稳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0-2%E9%83%A8%E5%88%86%E5%8F%AF%E8%A7%82%E6%B5%8B"><span class="toc-number">1.11.3.2.</span> <span class="toc-text"> 原因 2：部分可观测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0-3%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4%E5%A4%A7%E8%80%8C%E7%A8%80%E7%96%8F"><span class="toc-number">1.11.3.3.</span> <span class="toc-text"> 原因 3：动作空间大而稀疏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0-4%E9%95%BF%E6%97%B6%E7%A8%8B%E4%BF%A1%E7%94%A8%E5%88%86%E9%85%8D"><span class="toc-number">1.11.3.4.</span> <span class="toc-text"> 原因 4：长时程信用分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0-5%E8%AF%BE%E7%A8%8B%E8%BF%81%E7%A7%BB%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%88%90%E7%AB%8B"><span class="toc-number">1.11.3.5.</span> <span class="toc-text"> 原因 5：课程迁移不一定成立</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BD%AC%E5%90%91-policy-gradient"><span class="toc-number">1.12.</span> <span class="toc-text"> 11. 为什么转向 Policy Gradient</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#111-%E6%9C%80%E6%9C%AC%E8%B4%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.12.1.</span> <span class="toc-text"> 11.1 最本质的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#112-reinforce-%E7%9A%84%E7%9B%B4%E8%A7%89"><span class="toc-number">1.12.2.</span> <span class="toc-text"> 11.2 REINFORCE 的直觉</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nabla_theta-jtheta"><span class="toc-number">2.</span> <span class="toc-text"> [
+\nabla_\theta J(\theta)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#113-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%87%8F-baseline"><span class="toc-number">2.1.</span> <span class="toc-text"> 11.3 为什么要减 baseline</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nabla_theta-jtheta-2"><span class="toc-number">3.</span> <span class="toc-text"> [
+\nabla_\theta J(\theta)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#12-actor-critic%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%8C%E6%97%B6%E8%A6%81%E7%AD%96%E7%95%A5%E5%92%8C%E4%BB%B7%E5%80%BC%E7%BD%91%E7%BB%9C"><span class="toc-number">3.1.</span> <span class="toc-text"> 12. Actor-Critic：为什么同时要策略和价值网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-ppo%E5%BD%93%E5%89%8D%E8%AE%AD%E7%BB%83%E7%9A%84%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text"> 13. PPO：当前训练的核心算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#131-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E6%9B%B4%E6%96%B0%E5%A4%AA%E7%8C%9B"><span class="toc-number">3.2.1.</span> <span class="toc-text"> 13.1 为什么不能更新太猛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#132-%E6%A6%82%E7%8E%87%E6%AF%94%E5%80%BC"><span class="toc-number">3.2.2.</span> <span class="toc-text"> 13.2 概率比值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#133-ppo-%E7%9A%84-clipped-objective"><span class="toc-number">3.2.3.</span> <span class="toc-text"> 13.3 PPO 的 clipped objective</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#134-ppo-%E7%9A%84%E6%80%BB%E6%8D%9F%E5%A4%B1"><span class="toc-number">3.2.4.</span> <span class="toc-text"> 13.4 PPO 的总损失</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mathcal"><span class="toc-number">4.</span> <span class="toc-text"> [
+\mathcal</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#14-gae%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BC%B0-advantage"><span class="toc-number">4.1.</span> <span class="toc-text"> 14. GAE：为什么要估 Advantage</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#a_t"><span class="toc-number">5.</span> <span class="toc-text"> [
+A_t^</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#15-appo-%E5%92%8C-v-trace%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%8E%B0%E5%9C%A8%E4%B8%8D%E6%98%AF%E7%BA%AF-ppo"><span class="toc-number">5.1.</span> <span class="toc-text"> 15. APPO 和 V-trace：为什么你现在不是纯 PPO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#151-appo-%E7%9A%84%E5%8A%A8%E6%9C%BA"><span class="toc-number">5.1.1.</span> <span class="toc-text"> 15.1 APPO 的动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#152-v-trace-%E5%9C%A8%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">5.1.2.</span> <span class="toc-text"> 15.2 V-trace 在干什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#153-max_policy_lag"><span class="toc-number">5.1.3.</span> <span class="toc-text"> 15.3  max_policy_lag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%BF%85%E9%A1%BB%E9%87%8D%E8%A7%86%E9%83%A8%E5%88%86%E5%8F%AF%E8%A7%82%E6%B5%8B"><span class="toc-number">5.2.</span> <span class="toc-text"> 16. 为什么这个项目必须重视部分可观测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%85%B1%E4%BA%AB%E7%AD%96%E7%95%A5%E8%80%8C%E4%B8%8D%E6%98%AF%E6%AF%8F%E6%9C%BA%E4%B8%80%E5%A5%97%E7%BD%91%E7%BB%9C"><span class="toc-number">5.3.</span> <span class="toc-text"> 17. 为什么是共享策略而不是每机一套网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#171-%E5%8F%82%E6%95%B0%E9%87%8F"><span class="toc-number">5.3.1.</span> <span class="toc-text"> 17.1 参数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-%E5%AF%B9%E7%A7%B0%E6%80%A7"><span class="toc-number">5.3.2.</span> <span class="toc-text"> 17.2 对称性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#173-%E5%B7%A5%E7%A8%8B%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">5.3.3.</span> <span class="toc-text"> 17.3 工程稳定性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8A%A8%E4%BD%9C-mask-%E5%9C%A8%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E9%87%8C%E7%89%B9%E5%88%AB%E9%87%8D%E8%A6%81"><span class="toc-number">5.4.</span> <span class="toc-text"> 18. 为什么动作 mask 在这个项目里特别重要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#181-%E9%97%AE%E9%A2%98%E6%A0%B9%E6%BA%90"><span class="toc-number">5.4.1.</span> <span class="toc-text"> 18.1 问题根源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#182-%E5%BD%93%E5%89%8D%E5%B7%A5%E7%A8%8B%E6%80%8E%E4%B9%88%E5%81%9A"><span class="toc-number">5.4.2.</span> <span class="toc-text"> 18.2 当前工程怎么做</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#183-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E4%BF%9D%E7%95%99%E7%8E%AF%E5%A2%83%E4%BE%A7-fallback"><span class="toc-number">5.4.3.</span> <span class="toc-text"> 18.3 为什么还保留环境侧 fallback</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-%E5%A5%96%E5%8A%B1%E8%AE%BE%E8%AE%A1%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E6%98%AF%E6%9C%80%E5%AE%B9%E6%98%93%E5%AD%A6%E5%81%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">5.5.</span> <span class="toc-text"> 19. 奖励设计：为什么这是最容易学偏的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#191-%E5%A5%96%E5%8A%B1%E4%B8%8D%E6%98%AF%E4%BA%8B%E5%AE%9E%E8%80%8C%E6%98%AF%E8%AE%AD%E7%BB%83%E6%8E%A5%E5%8F%A3"><span class="toc-number">5.5.1.</span> <span class="toc-text"> 19.1 奖励不是事实，而是训练接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#192-%E5%BD%93%E5%89%8D%E8%BF%99%E5%A5%97%E5%A5%96%E5%8A%B1%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94%E4%B9%8B%E5%89%8D%E6%9B%B4%E5%90%88%E7%90%86"><span class="toc-number">5.5.2.</span> <span class="toc-text"> 19.2 当前这套奖励为什么比之前更合理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#193-reward-scale-%E5%92%8C-clip-%E7%9A%84%E8%80%A6%E5%90%88"><span class="toc-number">5.5.3.</span> <span class="toc-text"> 19.3 reward scale 和 clip 的耦合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-%E5%BD%93%E5%89%8D%E9%A1%B9%E7%9B%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%86%8D%E4%BB%A5-dqn-%E4%B8%BA%E4%B8%BB%E7%BA%BF"><span class="toc-number">5.6.</span> <span class="toc-text"> 20. 当前项目为什么不再以 DQN 为主线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E8%BF%99%E5%A5%97%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="toc-number">5.7.</span> <span class="toc-text"> 21. 这套工程里的代码结构应该怎么理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#211-%E5%8E%9F%E5%A7%8B%E7%8E%AF%E5%A2%83%E5%B1%82"><span class="toc-number">5.7.1.</span> <span class="toc-text"> 21.1 原始环境层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#212-%E5%B9%B6%E8%A1%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8C%85%E8%A3%85%E5%B1%82"><span class="toc-number">5.7.2.</span> <span class="toc-text"> 21.2 并行多智能体包装层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-sample-factory-%E9%80%82%E9%85%8D%E5%B1%82"><span class="toc-number">5.7.3.</span> <span class="toc-text"> 21.3 Sample Factory 适配层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#214-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">5.7.4.</span> <span class="toc-text"> 21.4 自定义编码器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#215-%E7%8E%AF%E5%A2%83%E6%B3%A8%E5%86%8C%E5%92%8C%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="toc-number">5.7.5.</span> <span class="toc-text"> 21.5 环境注册和默认参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#216-%E8%AE%AD%E7%BB%83%E5%85%A5%E5%8F%A3"><span class="toc-number">5.7.6.</span> <span class="toc-text"> 21.6 训练入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#217-%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-number">5.7.7.</span> <span class="toc-text"> 21.7 启动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#218-%E8%AF%84%E4%BC%B0%E8%84%9A%E6%9C%AC"><span class="toc-number">5.7.8.</span> <span class="toc-text"> 21.8 评估脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E4%B8%80%E6%9D%A1%E5%AE%8C%E6%95%B4%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E8%B5%B0"><span class="toc-number">5.8.</span> <span class="toc-text"> 22. 一条完整训练数据流到底怎么走</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5actor-%E9%87%87%E6%A0%B7"><span class="toc-number">5.8.1.</span> <span class="toc-text"> 第 1 步：actor 采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%E7%AD%96%E7%95%A5%E5%89%8D%E5%90%91"><span class="toc-number">5.8.2.</span> <span class="toc-text"> 第 2 步：策略前向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%E5%8A%A8%E4%BD%9C%E9%87%87%E6%A0%B7%E5%B9%B6%E6%89%A7%E8%A1%8C"><span class="toc-number">5.8.3.</span> <span class="toc-text"> 第 3 步：动作采样并执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%E6%94%B6%E9%9B%86%E8%BD%A8%E8%BF%B9"><span class="toc-number">5.8.4.</span> <span class="toc-text"> 第 4 步：收集轨迹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5learner-%E6%9B%B4%E6%96%B0"><span class="toc-number">5.8.5.</span> <span class="toc-text"> 第 5 步：learner 更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-6-%E6%AD%A5%E5%91%A8%E6%9C%9F%E6%80%A7%E4%BF%9D%E5%AD%98%E5%92%8C%E8%AF%84%E4%BC%B0"><span class="toc-number">5.8.6.</span> <span class="toc-text"> 第 6 步：周期性保存和评估</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-%E5%BD%93%E5%89%8D%E6%AD%A3%E5%BC%8F%E5%9F%BA%E7%BA%BF%E8%B6%85%E5%8F%82%E6%95%B0%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="toc-number">5.9.</span> <span class="toc-text"> 23. 当前正式基线超参数应该怎么理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#231-num_workers-4"><span class="toc-number">5.9.1.</span> <span class="toc-text"> 23.1  num_workers &#x3D; 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#232-rollout-32"><span class="toc-number">5.9.2.</span> <span class="toc-text"> 23.2  rollout &#x3D; 32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#233-recurrence-32"><span class="toc-number">5.9.3.</span> <span class="toc-text"> 23.3  recurrence &#x3D; 32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#234-batch_size-512"><span class="toc-number">5.9.4.</span> <span class="toc-text"> 23.4  batch_size &#x3D; 512</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#235-ppo_epochs-4"><span class="toc-number">5.9.5.</span> <span class="toc-text"> 23.5  ppo_epochs &#x3D; 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#236-learning_rate-2e-5"><span class="toc-number">5.9.6.</span> <span class="toc-text"> 23.6  learning_rate &#x3D; 2e-5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#237-gamma-0995"><span class="toc-number">5.9.7.</span> <span class="toc-text"> 23.7  gamma &#x3D; 0.995</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#238-exploration_loss_coeff-001"><span class="toc-number">5.9.8.</span> <span class="toc-text"> 23.8  exploration_loss_coeff &#x3D; 0.01</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#239-max_policy_lag-15"><span class="toc-number">5.9.9.</span> <span class="toc-text"> 23.9  max_policy_lag &#x3D; 15</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2310-reward_scale-0005-%E5%92%8C-reward_clip-30"><span class="toc-number">5.9.10.</span> <span class="toc-text"> 23.10  reward_scale &#x3D; 0.005  和  reward_clip &#x3D; 30</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-%E5%BD%93%E5%89%8D%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="toc-number">5.10.</span> <span class="toc-text"> 24. 当前模型结构应该怎么理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#241-cnn-%E9%83%A8%E5%88%86"><span class="toc-number">5.10.1.</span> <span class="toc-text"> 24.1 CNN 部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#242-measurement-mlp"><span class="toc-number">5.10.2.</span> <span class="toc-text"> 24.2 Measurement MLP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#243-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E5%81%9A%E5%BE%97%E6%9B%B4%E5%A4%A7"><span class="toc-number">5.10.3.</span> <span class="toc-text"> 24.3 为什么没有做得更大</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25-%E8%AE%AD%E7%BB%83%E6%97%A5%E5%BF%97%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E7%9C%8B"><span class="toc-number">5.11.</span> <span class="toc-text"> 25. 训练日志应该怎么看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#251-%E7%AC%AC%E4%B8%80%E5%B1%82%E7%B3%BB%E7%BB%9F%E6%9C%89%E6%B2%A1%E6%9C%89%E6%AD%A3%E5%B8%B8%E8%B5%B7"><span class="toc-number">5.11.1.</span> <span class="toc-text"> 25.1 第一层：系统有没有正常起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#252-%E7%AC%AC%E4%BA%8C%E5%B1%82%E6%98%AF%E4%B8%8D%E6%98%AF%E5%9C%A8%E7%94%A8-gpu"><span class="toc-number">5.11.2.</span> <span class="toc-text"> 25.2 第二层：是不是在用 GPU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#253-%E7%AC%AC%E4%B8%89%E5%B1%82learner-%E6%98%AF%E4%B8%8D%E6%98%AF%E7%93%B6%E9%A2%88"><span class="toc-number">5.11.3.</span> <span class="toc-text"> 25.3 第三层：learner 是不是瓶颈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#254-%E7%AC%AC%E5%9B%9B%E5%B1%82%E4%BB%BB%E5%8A%A1%E8%A1%A8%E7%8E%B0%E6%98%AF%E4%B8%8D%E6%98%AF%E5%9C%A8%E5%8F%98%E5%A5%BD"><span class="toc-number">5.11.4.</span> <span class="toc-text"> 25.4 第四层：任务表现是不是在变好</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%AD%E7%BB%83-reward-%E4%B8%8D%E7%AD%89%E4%BA%8E%E7%9C%9F%E5%AE%9E%E6%88%98%E6%96%97%E8%83%BD%E5%8A%9B"><span class="toc-number">5.12.</span> <span class="toc-text"> 26. 为什么训练 reward 不等于真实战斗能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#261-%E5%A5%96%E5%8A%B1%E4%B8%8D%E6%98%AF%E8%83%9C%E7%8E%87"><span class="toc-number">5.12.1.</span> <span class="toc-text"> 26.1 奖励不是胜率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#262-%E8%AE%AD%E7%BB%83%E5%AF%B9%E6%89%8B%E5%9B%BA%E5%AE%9A%E4%BC%9A%E6%9C%89%E8%BF%87%E6%8B%9F%E5%90%88"><span class="toc-number">5.12.2.</span> <span class="toc-text"> 26.2 训练对手固定，会有过拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#263-ppo-%E6%9B%B2%E7%BA%BF%E6%9C%AC%E6%9D%A5%E5%B0%B1%E6%9C%89%E6%B3%A2%E5%8A%A8"><span class="toc-number">5.12.3.</span> <span class="toc-text"> 26.3 PPO 曲线本来就有波动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27-resume-fresh-start-done-%E6%96%87%E4%BB%B6-env-step-%E4%B8%8A%E9%99%90"><span class="toc-number">5.13.</span> <span class="toc-text"> 27. Resume、Fresh Start、Done 文件、Env Step 上限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#271-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%98%AF-resume"><span class="toc-number">5.13.1.</span> <span class="toc-text"> 27.1 什么时候是 resume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#272-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%98%AF-fresh-start"><span class="toc-number">5.13.2.</span> <span class="toc-text"> 27.2 什么时候是 fresh start</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#273-done-%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">5.13.3.</span> <span class="toc-text"> 27.3  done  文件的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#274-train_for_env_steps-%E7%9A%84%E5%9D%91"><span class="toc-number">5.13.4.</span> <span class="toc-text"> 27.4  train_for_env_steps  的坑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#28-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E5%81%9A%E7%8B%AC%E7%AB%8B%E8%AF%84%E4%BC%B0"><span class="toc-number">5.14.</span> <span class="toc-text"> 28. 为什么必须做独立评估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#29-%E5%BD%93%E5%89%8D%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%E7%9A%84%E7%9C%9F%E6%AD%A3%E9%80%BB%E8%BE%91"><span class="toc-number">5.15.</span> <span class="toc-text"> 29. 当前技术路线的真正逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5%E5%85%88%E6%8A%8A%E7%8E%AF%E5%A2%83%E6%95%B4%E7%90%86%E6%88%90%E7%8E%B0%E4%BB%A3-rl-%E6%A1%86%E6%9E%B6%E8%83%BD%E5%90%83%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="toc-number">5.15.1.</span> <span class="toc-text"> 第 1 步：先把环境整理成现代 RL 框架能吃的形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%E5%85%88%E8%AF%81%E6%98%8E%E7%B3%BB%E7%BB%9F%E5%B7%A5%E7%A8%8B%E9%93%BE%E8%B7%AF%E9%80%9A"><span class="toc-number">5.15.2.</span> <span class="toc-text"> 第 2 步：先证明系统工程链路通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%8C%81%E7%BB%AD%E8%B7%91%E7%9A%84-baseline"><span class="toc-number">5.15.3.</span> <span class="toc-text"> 第 3 步：建立一个可持续跑的 baseline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%E5%BB%BA%E7%AB%8B%E8%AF%84%E4%BC%B0%E9%97%AD%E7%8E%AF"><span class="toc-number">5.15.4.</span> <span class="toc-text"> 第 4 步：建立评估闭环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5%E5%86%8D%E8%B0%88%E6%9B%B4%E5%A4%8D%E6%9D%82%E5%A2%9E%E5%BC%BA"><span class="toc-number">5.15.5.</span> <span class="toc-text"> 第 5 步：再谈更复杂增强</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E8%AF%AF%E8%A7%A3"><span class="toc-number">5.16.</span> <span class="toc-text"> 30. 一些常见误解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%A7%A3-1%E8%83%BD%E8%B7%91%E8%B5%B7%E6%9D%A5%E5%B0%B1%E7%AD%89%E4%BA%8E%E6%A8%A1%E5%9E%8B%E6%96%B9%E5%90%91%E5%AF%B9%E4%BA%86"><span class="toc-number">5.16.1.</span> <span class="toc-text"> 误解 1：能跑起来就等于模型方向对了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%A7%A3-2reward-%E4%B8%8A%E5%8D%87%E5%B0%B1%E4%B8%80%E5%AE%9A%E6%9B%B4%E4%BC%9A%E8%B5%A2"><span class="toc-number">5.16.2.</span> <span class="toc-text"> 误解 2：reward 上升就一定更会赢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%A7%A3-3%E5%8F%82%E6%95%B0%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%BC%BA"><span class="toc-number">5.16.3.</span> <span class="toc-text"> 误解 3：参数越大越强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%A7%A3-4%E5%8A%A8%E4%BD%9C-mask-%E5%81%9A%E4%BA%86%E7%8E%AF%E5%A2%83%E5%85%9C%E5%BA%95%E5%B0%B1%E5%A4%9F%E4%BA%86"><span class="toc-number">5.16.4.</span> <span class="toc-text"> 误解 4：动作 mask 做了环境兜底就够了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%A7%A3-5resume-%E5%B0%B1%E5%8F%AA%E6%98%AF%E7%BB%A7%E7%BB%AD%E8%B7%91%E5%91%BD%E4%BB%A4"><span class="toc-number">5.16.5.</span> <span class="toc-text"> 误解 5：resume 就只是继续跑命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#31-%E5%BB%BA%E8%AE%AE%E4%BD%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.17.</span> <span class="toc-text"> 31. 建议你的学习顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%81%8D%E5%BB%BA%E7%AB%8B%E5%85%A8%E5%B1%80%E5%9B%BE%E6%99%AF"><span class="toc-number">5.17.1.</span> <span class="toc-text"> 第一遍：建立全局图景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%81%8D%E5%95%83%E6%A0%B8%E5%BF%83%E6%95%B0%E5%AD%A6"><span class="toc-number">5.17.2.</span> <span class="toc-text"> 第二遍：啃核心数学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%81%8D%E5%AF%B9%E7%85%A7%E4%BB%A3%E7%A0%81"><span class="toc-number">5.17.3.</span> <span class="toc-text"> 第三遍：对照代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E9%81%8D%E8%AE%AD%E7%BB%83%E5%92%8C%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%93%8D"><span class="toc-number">5.17.4.</span> <span class="toc-text"> 第四遍：训练和评估实操</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32-%E4%B8%80%E4%BB%BD%E6%9C%80%E5%B0%8F%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84%E8%AE%A4%E7%9F%A5%E6%B8%85%E5%8D%95"><span class="toc-number">5.18.</span> <span class="toc-text"> 32. 一份最小可执行的认知清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#33-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93%E6%95%B4%E6%9D%A1%E8%B7%AF%E7%BA%BF"><span class="toc-number">5.19.</span> <span class="toc-text"> 33. 一句话总结整条路线</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+        <ul>
+          <li><a href="/notes/KalmanFilter/" rel="bookmark" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></li><li><a href="/notes/EKF/" rel="bookmark" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></li><li><a href="/notes/ESKF/" rel="bookmark" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></li><li><a href="/notes/BSpline/" rel="bookmark" title="B样条与轨迹优化">B样条与轨迹优化</a></li><li class="active"><a href="/notes/MaCA_RL/" rel="bookmark" title="MaCA 强化学习从零到工程实践指南">MaCA 强化学习从零到工程实践指南</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="RakuHan"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">RakuHan</p>
+  <div class="description" itemprop="description">Touching Fish</div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">7</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">2</span>
+        <span class="name">分类</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2d0eDY5MDE=" title="https:&#x2F;&#x2F;github.com&#x2F;gtx6901"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+  </ul>
+    
+  <li class="item">
+    <a href="/photography/" rel="section"><i class="ic i-camera"></i>photography</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/projects/" rel="section"><i class="ic i-code"></i>projects</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>关于</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a>
+</div>
+
+    <span><a href="/notes/Leetcode207/" title="Leetcode随记-207课程表">Leetcode随记-207课程表</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/KalmanFilter/" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BSpline/" title="B样条与轨迹优化">B样条与轨迹优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/MaCA_RL/" title="MaCA 强化学习从零到工程实践指南">MaCA 强化学习从零到工程实践指南</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2026/03/01/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/EKF/" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">RakuHan @ らくハンの部屋</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '/notes/MaCA_RL/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,copy_tex: true,
+    katex: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
