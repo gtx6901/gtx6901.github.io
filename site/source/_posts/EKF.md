@@ -6,6 +6,7 @@ categories:
 tags:
   - 状态估计
   - 卡尔曼滤波
+  - Robomaster
 math: true
 cover: cover.jpg
 permalink: /notes/EKF/

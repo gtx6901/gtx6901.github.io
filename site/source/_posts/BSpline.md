@@ -6,6 +6,7 @@ categories:
 tags:
   - 轨迹规划
   - B样条
+  - Robomaster
 math: true
 cover: cover.jpg
 permalink: /notes/BSpline/
