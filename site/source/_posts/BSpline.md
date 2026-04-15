@@ -192,17 +192,16 @@ $$
   & \ddots & \ddots & \ddots &   \\
   &        & 1      & 4      & 1 \\
   &        &        &        & 6
-\end{bmatrix}}_{A}
+\end{bmatrix}}_{A} 
 \begin{bmatrix} Q_0 \\ Q_1 \\ \vdots \\ Q_{N-1} \\ Q_N \end{bmatrix}
-=
-\begin{bmatrix} D_0 \\ D_1 \\ \vdots \\ D_{N-1} \\ D_N \end{bmatrix}
+=\begin{bmatrix} D_0 \\ D_1 \\ \vdots \\ D_{N-1} \\ D_N \end{bmatrix}
 $$
 
 #### d. 求解与理解
 
 这个三对角矩阵具有极好的计算性质：
 *   它是**严格对角占优**的（对角元素 $4$ 大于两侧元素之和 $1+1=2$），因此方程组**有唯一解且数值稳定**。
-*   可以用**Thomas 算法（追赶法）**在 $O(N)$ 时间内高效求解，远快于通用的 $O(N^3)$ 高斯消元。
+*   可以用 **Thomas 算法（追赶法）** 在 $O(N)$ 时间内高效求解，远快于通用的 $O(N^3)$ 高斯消元。
 
 求解后得到 $Q_0, Q_1, \dots, Q_N$，再由边界条件恢复两端的幽灵控制点：
 $$
