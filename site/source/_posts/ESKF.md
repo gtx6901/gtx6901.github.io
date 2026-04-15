@@ -425,7 +425,7 @@ $$
 
 ---
 
-## ?、参考文献
+## 4、参考文献
 [知乎问答-如何理解「李群、李代数的初衷就是求解微分方程」？](https://www.zhihu.com/question/356243536/answer/2000339978065057387)  
 [知乎专栏-简明ESKF推导](https://zhuanlan.zhihu.com/p/441182819)  
 [知乎专栏-简单易懂(?)的误差状态卡尔曼滤波器(Error State Kalman Filter, ESKF)的原理与实现（一）原理简介](https://zhuanlan.zhihu.com/p/545370811)
