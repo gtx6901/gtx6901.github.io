@@ -9,7 +9,7 @@ tags:
   - 流形
   - Robomaster
 math: true
-cover: cover.png
+cover: cover.jpg
 permalink: /notes/ESKF/
 ---
 
