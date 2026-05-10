@@ -215,11 +215,6 @@ Point-LIO Batch测量队列问题记录 - 笔记 |
 <p>原来的点数触发仍然保留：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">batch_point_count &gt;= parameters.batch_point_size</span><br><span class="line">|| batch_point_count &gt;= parameters.batch_max_points</span><br><span class="line">|| preprocess.point_deque.<span class="built_in">empty</span>()</span><br></pre></td></tr></table></figure>
 <p>这样正常点率下仍然主要按 100 点切 Batch；遮挡低点率时则退化成短时间窗小 Batch。小 Batch 仍走 Batch update，因为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 时它本来就是单点复合测量，语义上接近 Point-LIO。</p>
-<p>同时把 Batch 提交流程抽成  <code>flush_batch_points()</code> ，顺手修了两个实现问题：</p>
-<ol>
-<li><code>update_point_batch()</code>  失败时，不再把  <code>batch_points_odom_frame</code>  加进地图，避免污染 ivox map。</li>
-<li>处理 IMU 前，如果已经有待提交的 LiDAR Batch，先提交 Batch 再继续处理 IMU，避免先处理 IMU 后又提交旧时间段 Batch 导致状态时间回退。</li>
-</ol>
 <h2 id="6-修复后的效果预期"><a class="markdownIt-Anchor" href="#6-修复后的效果预期">#</a> 6、修复后的效果预期</h2>
 <p>在正常场景：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">70k pts/s, batch_point_size = 100</span><br><span class="line">=&gt; 约 1.43ms 一个 Batch</span><br></pre></td></tr></table></figure>
@@ -249,7 +244,7 @@ Point-LIO Batch测量队列问题记录 - 笔记 |
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2026-05-10 18:14:02" itemprop="dateModified" datetime="2026-05-10T18:14:02+08:00">2026-05-10</time>
+    <time title="修改时间：2026-05-10 18:27:43" itemprop="dateModified" datetime="2026-05-10T18:27:43+08:00">2026-05-10</time>
   </span>
 </div>
 
@@ -440,19 +435,20 @@ Point-LIO Batch测量队列问题记录 - 笔记 |
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/2026/03/01/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a>
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/Leetcode207/" title="Leetcode随记-207课程表">Leetcode随记-207课程表</a></span>
+    <span><a href="/notes/KalmanFilter/" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></span>
   </li>
 
       
@@ -472,27 +468,36 @@ Point-LIO Batch测量队列问题记录 - 笔记 |
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
-    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
     <span><a href="/notes/LQR_MPC/" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2026/03/01/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a>
+</div>
+
+    <span><a href="/notes/Leetcode207/" title="Leetcode随记-207课程表">Leetcode随记-207课程表</a></span>
   </li>
 
       
@@ -512,17 +517,7 @@ Point-LIO Batch测量队列问题记录 - 笔记 |
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
-    <span><a href="/notes/KalmanFilter/" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></span>
+    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
   </li>
 
   </ul>
