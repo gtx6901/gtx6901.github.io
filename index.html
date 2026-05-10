@@ -96,10 +96,10 @@
         <ul>
           <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzhIN3NjUGlrQ1NyVTlXTGRfWnE1LUFTRlZET1BhN2VDcmVZXzRDWTFhdzVv.png"></li>
           <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWhKS0Q1aHFKVVRKc1pMdkczZ3FYaUFTM011XzdvcUNHckhkVFhQNFdocFY4.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2ppWTVuYmFaS1NJSFVHQVhNRWRVTkFYSy0wVTJ0aUxDNVdSbXJHandNaExN.jpg"></li>
           <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></li>
           <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy83OTViN2Y5YzZlMWI4YjE4L0lRQm5WS2xmLXB4bVJyQlp6eHM2ZTVQd0FaRm1jSzVQQnhpSWdrTmdweU94TWRV.webp"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2U0d1hBRFJralRiWWY2UWdCc1I0OUFYM1I3TkNUM0RDMmdtY05xaVFUMmdV.png"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2ppWTVuYmFaS1NJSFVHQVhNRWRVTkFYSy0wVTJ0aUxDNVdSbXJHandNaExN.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWxTOVFEaFV6TlJLUDBJRTVhYUU1TEFiOU5KbDN2TG9IMTdpeDB4Q0RUSHRj.jpg"></li>
         </ul>
       </div>
     </header>
@@ -123,6 +123,40 @@
   <div class="index wrap">
     <h2 class="divider">文章列表</h2>
     <div class="segments posts">
+        
+<article class="item">
+  <div class="cover">
+    <a href="/notes/point_lio_batch_queue/" itemprop="url" title="Point-LIO Batch测量队列问题记录"><img data-src="/notes/point_lio_batch_queue/cover.png"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="创建时间：2026-05-10 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2026-05-10T00:00:00+08:00">2026-05-10</time>
+  </span>
+</div>
+
+    <h3><a href="/notes/point_lio_batch_queue/" itemprop="url" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></h3>
+    <div class="excerpt">
+        # Point-LIO Batch 测量队列问题复盘
+这篇短文记录一次 small_point_lio 的 Batch 更新问题排查。
+# 1、原版 Point-LIO 的处理方式
+原版 Point-LIO 并不是 IMU callback 一来就直接推进滤波器，然后等 LiDAR 点云包来了再处理。它的 callback 主要负责把 LiDAR 和 IMU 数据放入 buffer；真正的滤波处理发生在 sync_packages(Measures) 成功之后。
+它大致做的是：
+12345等待一个 LiDAR scan 和覆盖该 scan 时间范围的 IMU 数据-&amp;gt; 在这个...
+    </div>
+    <div class="meta footer">
+      <span>
+        <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" title="笔记"><i class="ic i-flag"></i>笔记</a>
+      </span>
+    </div>
+    <a href="/notes/point_lio_batch_queue/" itemprop="url" title="Point-LIO Batch测量队列问题记录" class="btn">more...</a>
+  </div>
+</article>
+
         
 <article class="item">
   <div class="cover">
@@ -239,7 +273,7 @@
         
 <article class="item">
   <div class="cover">
-    <a href="/notes/Leetcode207/" itemprop="url" title="Leetcode随记-207课程表"><img data-src="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWhKS0Q1aHFKVVRKc1pMdkczZ3FYaUFTM011XzdvcUNHckhkVFhQNFdocFY4.jpg"></a>
+    <a href="/notes/Leetcode207/" itemprop="url" title="Leetcode随记-207课程表"><img data-src="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></a>
   </div>
   <div class="info">
     
@@ -418,7 +452,7 @@ X∼N(μ1,σ12)X &#92;sim N(&#92;mu_1,...
         
 <article class="item">
   <div class="cover">
-    <a href="/2026/03/01/hello-world/" itemprop="url" title="Hello World"><img data-src="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2U0d1hBRFJralRiWWY2UWdCc1I0OUFYM1I3TkNUM0RDMmdtY05xaVFUMmdV.png"></a>
+    <a href="/2026/03/01/hello-world/" itemprop="url" title="Hello World"><img data-src="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></a>
   </div>
   <div class="info">
     
@@ -474,7 +508,7 @@ More info: Writing
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">9</span>
+        <span class="count">10</span>
         <span class="name">文章</span>
       </a>
     </div>
@@ -486,7 +520,7 @@ More info: Writing
     </div>
     <div class="item tags">
       <a href="/tags/">
-        <span class="count">14</span>
+        <span class="count">16</span>
         <span class="name">标签</span>
       </a>
     </div>
@@ -575,7 +609,7 @@ More info: Writing
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/EKF/" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></span>
+    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
   </li>
 
       
@@ -585,7 +619,27 @@ More info: Writing
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
+    <span><a href="/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/MaCA_RL/" title="MaCA 强化学习从零到工程实践指南">MaCA 强化学习从零到工程实践指南</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
   </li>
 
       
@@ -605,27 +659,7 @@ More info: Writing
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/BSpline/" title="B样条与轨迹优化">B样条与轨迹优化</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
-    <span><a href="/notes/LQR_MPC/" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
-    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
+    <span><a href="/notes/EKF/" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></span>
   </li>
 
       
@@ -654,7 +688,17 @@ More info: Writing
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/MaCA_RL/" title="MaCA 强化学习从零到工程实践指南">MaCA 强化学习从零到工程实践指南</a></span>
+    <span><a href="/notes/LQR_MPC/" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BSpline/" title="B样条与轨迹优化">B样条与轨迹优化</a></span>
   </li>
 
   </ul>

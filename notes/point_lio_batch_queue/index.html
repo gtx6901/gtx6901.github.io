@@ -1,0 +1,600 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="らくハンの部屋" href="https://gtx6901.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="らくハンの部屋" href="https://gtx6901.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="らくハンの部屋" href="https://gtx6901.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Robomaster,状态估计,Point-LIO,DEBUG" />
+
+
+<link rel="canonical" href="https://gtx6901.github.io/notes/point_lio_batch_queue/">
+
+
+
+  <title>
+Point-LIO Batch测量队列问题记录 - 笔记 |
+らくハンの部屋</title>
+<!-- hexo injector head_end start --><style>
+#qr img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Point-LIO Batch测量队列问题记录
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2026-05-10 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2026-05-10T00:00:00+08:00">2026-05-10</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">らくハンの部屋</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="/notes/point_lio_batch_queue/cover.png">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="item" rel="index" title="分类于 笔记"><span itemprop="name">笔记</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="https://gtx6901.github.io/notes/point_lio_batch_queue/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="RakuHan">
+    <meta itemprop="description" content=", Touching Fish">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="らくハンの部屋">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="point-lio-batch测量队列问题复盘"><a class="markdownIt-Anchor" href="#point-lio-batch测量队列问题复盘">#</a> Point-LIO Batch 测量队列问题复盘</h1>
+<p>这篇短文记录一次 small_point_lio 的 Batch 更新问题排查。</p>
+<h2 id="1-原版-point-lio-的处理方式"><a class="markdownIt-Anchor" href="#1-原版-point-lio-的处理方式">#</a> 1、原版 Point-LIO 的处理方式</h2>
+<p>原版 Point-LIO 并不是 IMU callback 一来就直接推进滤波器，然后等 LiDAR 点云包来了再处理。它的 callback 主要负责把 LiDAR 和 IMU 数据放入 buffer；真正的滤波处理发生在  <code>sync_packages(Measures)</code>  成功之后。</p>
+<p>它大致做的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">等待一个 LiDAR scan 和覆盖该 scan 时间范围的 IMU 数据</span><br><span class="line">-&gt; 在这个 measurement package 内部按时间顺序处理</span><br><span class="line">-&gt; 用点云包起始时间 + 点内相对时间还原每个点的采样时刻</span><br><span class="line">-&gt; 状态预测到该点时间</span><br><span class="line">-&gt; 做点到面残差更新</span><br></pre></td></tr></table></figure>
+<p>也就是说，LiDAR topic 的发布频率虽然可能只有 50Hz 或 100Hz，但包内每个点仍然有自己的时间戳。Point-LIO 的 “逐点更新” 是在收到整包之后，沿着传感器时间线快速回放这一包内部的测量。</p>
+<p>这带来两个结论：</p>
+<ul>
+<li>原版 Point-LIO 的估计时间分辨率可以高于 LiDAR topic 频率。</li>
+<li>但 LiDAR 修正后的位姿实际到达下游的延迟仍然受 LiDAR package 到达频率限制。</li>
+</ul>
+<p>所以 Point-LIO 的高带宽并不等于控制器一定能低延迟收到均匀高频的 LiDAR-corrected odom。驱动打包和 ROS2 调度仍然是现实瓶颈。</p>
+<h2 id="2-small_point_lio-的现有实现差异"><a class="markdownIt-Anchor" href="#2-small_point_lio-的现有实现差异">#</a> 2、small_point_lio 的现有实现差异</h2>
+<p>我手上的 small_point_lio 更偏 callback-driven：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// LiDAR callback</span></span><br><span class="line">small_point_lio-&gt;<span class="built_in">on_point_cloud_callback</span>(pointcloud);</span><br><span class="line">small_point_lio-&gt;<span class="built_in">handle_once</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// IMU callback</span></span><br><span class="line">small_point_lio-&gt;<span class="built_in">on_imu_callback</span>(imu_msg);</span><br><span class="line">small_point_lio-&gt;<span class="built_in">handle_once</span>();</span><br></pre></td></tr></table></figure>
+<p>这意味着 IMU callback 可能先推进  <code>time_current</code> 。等低频 LiDAR package 到来时，包内早期点可能已经落后于当前滤波器时间。代码里对这种迟到点的处理是直接丢掉：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (point_lidar_frame.timestamp &lt; time_current) &#123;</span><br><span class="line">    preprocess.point_deque.<span class="built_in">pop_front</span>();</span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这不是本文修复的重点，但它解释了为什么 LiDAR 驱动发布频率、package 延迟、ROS2 callback 调度会明显影响系统表现。把 LiDAR driver 调到更高发布频率，例如 200Hz，可以缩短单包时间跨度，从工程上缓解这个问题，但不是根治。</p>
+<h2 id="3-之前-batch-版本的问题"><a class="markdownIt-Anchor" href="#3-之前-batch-版本的问题">#</a> 3、之前 Batch 版本的问题</h2>
+<p>Batch-LIWO 的核心视角可以这样理解：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把一个短时间窗内的多个 LiDAR 点看成 batch_end_time 的一个复合测量。</span><br></pre></td></tr></table></figure>
+<p>原来单点更新是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">predict 到 point 时间</span><br><span class="line">构造 1 个点到面残差</span><br><span class="line">做一次 measurement update</span><br></pre></td></tr></table></figure>
+<p>Batch 更新变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">predict 到 batch 末端时间</span><br><span class="line">把 batch 内点去畸变到 batch 末端</span><br><span class="line">构造 N 个点到面残差</span><br><span class="line">做一次 measurement update</span><br></pre></td></tr></table></figure>
+<p>从 Kalman Filter 的角度看，流程仍然是  <code>predict -&gt; update</code> 。变化的是测量模型：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mn>1</mn></msup><mo separator="true">,</mo><mtext> </mtext><mi>H</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mn>1</mn><mo>×</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">z \in \mathbb{R}^1,\ H \in \mathbb{R}^{1 \times n}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0585479999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.864108em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">×</span><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>变成：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>N</mi></msup><mo separator="true">,</mo><mtext> </mtext><mi>H</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>N</mi><mo>×</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">z \in \mathbb{R}^N,\ H \in \mathbb{R}^{N \times n}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0857709999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913309999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.891331em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.891331em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="mbin mtight">×</span><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>因此 Batch 更新提高吞吐量的原因不是少做了协方差预测。原版 Point-LIO 的 LiDAR 点之间本来也主要只做状态预测，不在每个点之间传播过程协方差。Batch 真正减少的是 LiDAR measurement update 的高频重复开销，例如 Kalman 增益求解、状态注入、协方差修正和地图插入。</p>
+<p>之前的实现只按点数切 Batch：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">batch_point_count &gt;= batch_point_size</span><br><span class="line">|| batch_point_count &gt;= batch_max_points</span><br><span class="line">|| preprocess.point_deque.<span class="built_in">empty</span>()</span><br></pre></td></tr></table></figure>
+<p>正常情况下这没有明显问题。比如降采样后 70k pts/s， <code>batch_point_size = 100</code> ，一个 Batch 大约是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">100 / 70000 = 1.43ms</span><br></pre></td></tr></table></figure>
+<p>这是一个合理的小时间窗。</p>
+<p>真正的问题发生在边缘场景。</p>
+<h2 id="4-容易出问题的场景"><a class="markdownIt-Anchor" href="#4-容易出问题的场景">#</a> 4、容易出问题的场景</h2>
+<p>假设 LiDAR topic 是 50Hz，即一个 package 约 20ms。正常点率下，一个 package 内有足够多的有效点，所以 100 点 Batch 仍然只覆盖约 1.43ms。</p>
+<p>但是如果激光雷达视野被严重遮挡，例如近距离用手挡住窗口，大量点会被距离过滤：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (dist &lt; parameters-&gt;min_distance_squared || dist &gt; parameters-&gt;max_distance_squared) &#123;</span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时一个 20ms package 内可能只剩很少有效点，例如 20 个。它们的时间戳可能分布在整个 package 内：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T + 0.5ms, T + 2.0ms, ..., T + 19.2ms</span><br></pre></td></tr></table></figure>
+<p>旧实现因为凑不满 100 点，最后会被  <code>preprocess.point_deque.empty()</code>  触发提交：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">20 个点，被当成一个 Batch</span><br><span class="line">Batch 时间跨度接近 20ms</span><br></pre></td></tr></table></figure>
+<p>这会破坏 Batch-LIWO 的关键假设。 <code>h_point_batch()</code>  会取 batch 最后一个点的时间作为参考：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> last_time = batch_points_timestamps.<span class="built_in">back</span>();</span><br></pre></td></tr></table></figure>
+<p>然后用 batch 末端的一组速度和角速度把所有点补偿到末端：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">velocity_imu = ...;</span><br><span class="line">angular_velocity_imu = ...;</span><br></pre></td></tr></table></figure>
+<p>如果最早的点距离末端接近 20ms，甚至更多，那么恒速、恒角速度近似会明显变差。此时系统得到的是一个 “点数很少、几何约束弱、时间跨度却很长” 的复合测量。它比正常 Point-LIO 逐点处理更容易退化。</p>
+<p>所以问题不是 Batch 理论本身，而是实现没有保证：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个 Batch 必须是短时间窗内的复合测量。</span><br></pre></td></tr></table></figure>
+<h2 id="5-这次的解决方案"><a class="markdownIt-Anchor" href="#5-这次的解决方案">#</a> 5、这次的解决方案</h2>
+<p>这次修复采用 “时间 + 点数” 双约束。</p>
+<p>新增参数：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">batch_max_duration:</span> <span class="number">0.002</span></span><br></pre></td></tr></table></figure>
+<p>含义是一个 Batch 最大只能覆盖 2ms。收集新点时，如果当前点会让已有 Batch 超过时间窗口，就先提交旧 Batch，再用当前点开启新 Batch：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!batch_points_buffer.<span class="built_in">empty</span>() &amp;&amp; parameters.batch_max_duration &gt; <span class="number">0.0</span> &amp;&amp;</span><br><span class="line">    point_lidar_frame.timestamp - batch_points_buffer.<span class="built_in">front</span>().timestamp &gt;= parameters.batch_max_duration) &#123;</span><br><span class="line">    <span class="built_in">flush_batch_points</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原来的点数触发仍然保留：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">batch_point_count &gt;= parameters.batch_point_size</span><br><span class="line">|| batch_point_count &gt;= parameters.batch_max_points</span><br><span class="line">|| preprocess.point_deque.<span class="built_in">empty</span>()</span><br></pre></td></tr></table></figure>
+<p>这样正常点率下仍然主要按 100 点切 Batch；遮挡低点率时则退化成短时间窗小 Batch。小 Batch 仍走 Batch update，因为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 时它本来就是单点复合测量，语义上接近 Point-LIO。</p>
+<p>同时把 Batch 提交流程抽成  <code>flush_batch_points()</code> ，顺手修了两个实现问题：</p>
+<ol>
+<li><code>update_point_batch()</code>  失败时，不再把  <code>batch_points_odom_frame</code>  加进地图，避免污染 ivox map。</li>
+<li>处理 IMU 前，如果已经有待提交的 LiDAR Batch，先提交 Batch 再继续处理 IMU，避免先处理 IMU 后又提交旧时间段 Batch 导致状态时间回退。</li>
+</ol>
+<h2 id="6-修复后的效果预期"><a class="markdownIt-Anchor" href="#6-修复后的效果预期">#</a> 6、修复后的效果预期</h2>
+<p>在正常场景：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">70k pts/s, batch_point_size = 100</span><br><span class="line">=&gt; 约 1.43ms 一个 Batch</span><br></pre></td></tr></table></figure>
+<p>系统仍然走高吞吐 Batch 更新。</p>
+<p>在遮挡或低有效点率场景：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LiDAR package 20ms</span><br><span class="line">有效点只剩 20 个</span><br><span class="line">batch_max_duration = 2ms</span><br></pre></td></tr></table></figure>
+<p>旧实现可能形成一个 20ms Batch；新实现会切成多个小 Batch，每个 Batch 时间跨度不超过 2ms。这样不会把长时间跨度内的稀疏点硬合成一个复合观测。</p>
+<p>这不是完整修复所有同步问题。callback-driven 架构、迟到 LiDAR 点丢弃、LiDAR driver 打包延迟依然存在。但这次修复针对的是 Batch 模式的主要矛盾：</p>
+<blockquote>
+<p>Batch 更新必须保持短时间窗复合测量的语义；当有效点率下降时，应退化为小 Batch，而不是变成长时间窗 Batch。</p>
+</blockquote>
+<p>这个修复使 Batch 模式在边缘遮挡场景下更接近 Point-LIO 的原理，也避免了因为实现细节导致的额外退化。</p>
+
+      <div class="tags">
+          <a href="/tags/Robomaster/" rel="tag"><i class="ic i-tag"></i> Robomaster</a>
+          <a href="/tags/%E7%8A%B6%E6%80%81%E4%BC%B0%E8%AE%A1/" rel="tag"><i class="ic i-tag"></i> 状态估计</a>
+          <a href="/tags/Point-LIO/" rel="tag"><i class="ic i-tag"></i> Point-LIO</a>
+          <a href="/tags/DEBUG/" rel="tag"><i class="ic i-tag"></i> DEBUG</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2026-05-10 18:13:06" itemprop="dateModified" datetime="2026-05-10T18:13:06+08:00">2026-05-10</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> 赞赏</button>
+  <p>请我喝[茶]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay_my.png" alt="RakuHan 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay_my.png" alt="RakuHan 支付宝">
+        <p>支付宝</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>RakuHan <i class="ic i-at"><em>@</em></i>らくハンの部屋
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="https://gtx6901.github.io/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">https://gtx6901.github.io/notes/point_lio_batch_queue/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/notes/LQR_MPC/" itemprop="url" rel="prev" data-background-image="&#x2F;notes&#x2F;LQR_MPC&#x2F;cover.jpg" title="最优控制：LQR与MPC">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> 笔记</span>
+  <h3>最优控制：LQR与MPC</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#point-lio-batch%E6%B5%8B%E9%87%8F%E9%98%9F%E5%88%97%E9%97%AE%E9%A2%98%E5%A4%8D%E7%9B%98"><span class="toc-number">1.</span> <span class="toc-text"> Point-LIO Batch 测量队列问题复盘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8E%9F%E7%89%88-point-lio-%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text"> 1、原版 Point-LIO 的处理方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-small_point_lio-%E7%9A%84%E7%8E%B0%E6%9C%89%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82"><span class="toc-number">1.2.</span> <span class="toc-text"> 2、small_point_lio 的现有实现差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B9%8B%E5%89%8D-batch-%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text"> 3、之前 Batch 版本的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.</span> <span class="toc-text"> 4、容易出问题的场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%BF%99%E6%AC%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.5.</span> <span class="toc-text"> 5、这次的解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BF%AE%E5%A4%8D%E5%90%8E%E7%9A%84%E6%95%88%E6%9E%9C%E9%A2%84%E6%9C%9F"><span class="toc-number">1.6.</span> <span class="toc-text"> 6、修复后的效果预期</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+        <ul>
+          <li><a href="/notes/KalmanFilter/" rel="bookmark" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></li><li><a href="/notes/EKF/" rel="bookmark" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></li><li><a href="/notes/ESKF/" rel="bookmark" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></li><li><a href="/notes/BSpline/" rel="bookmark" title="B样条与轨迹优化">B样条与轨迹优化</a></li><li><a href="/notes/MaCA_RL/" rel="bookmark" title="MaCA 强化学习从零到工程实践指南">MaCA 强化学习从零到工程实践指南</a></li><li><a href="/notes/BLDC_voltage_saturation/" rel="bookmark" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></li><li><a href="/notes/LQR_MPC/" rel="bookmark" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></li><li class="active"><a href="/notes/point_lio_batch_queue/" rel="bookmark" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="RakuHan"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">RakuHan</p>
+  <div class="description" itemprop="description">Touching Fish</div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">10</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">2</span>
+        <span class="name">分类</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">16</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2d0eDY5MDE=" title="https:&#x2F;&#x2F;github.com&#x2F;gtx6901"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a>
+  </li>
+
+  </ul>
+    
+  <li class="item">
+    <a href="/photography/" rel="section"><i class="ic i-camera"></i>photography</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/projects/" rel="section"><i class="ic i-code"></i>projects</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>关于</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/EKF/" title="扩展卡尔曼滤波(EKF) 101">扩展卡尔曼滤波(EKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BSpline/" title="B样条与轨迹优化">B样条与轨迹优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/LQR_MPC/" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a>
+</div>
+
+    <span><a href="/notes/Leetcode207/" title="Leetcode随记-207课程表">Leetcode随记-207课程表</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/KalmanFilter/" title="卡尔曼滤波(Kalman Filter) 101">卡尔曼滤波(Kalman Filter) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2026/03/01/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/MaCA_RL/" title="MaCA 强化学习从零到工程实践指南">MaCA 强化学习从零到工程实践指南</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">RakuHan @ らくハンの部屋</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '/notes/point_lio_batch_queue/',
+    favicon: {
+      show: "(｀･ω･)",
+      hide: "( ﾟ∀ﾟ)"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,copy_tex: true,
+    katex: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
