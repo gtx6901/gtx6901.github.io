@@ -197,11 +197,6 @@ batch_point_count >= parameters.batch_point_size
 
 这样正常点率下仍然主要按 100 点切 Batch；遮挡低点率时则退化成短时间窗小 Batch。小 Batch 仍走 Batch update，因为 $N=1$ 时它本来就是单点复合测量，语义上接近 Point-LIO。
 
-同时把 Batch 提交流程抽成 `flush_batch_points()`，顺手修了两个实现问题：
-
-1. `update_point_batch()` 失败时，不再把 `batch_points_odom_frame` 加进地图，避免污染 ivox map。
-2. 处理 IMU 前，如果已经有待提交的 LiDAR Batch，先提交 Batch 再继续处理 IMU，避免先处理 IMU 后又提交旧时间段 Batch 导致状态时间回退。
-
 ## 6、修复后的效果预期
 
 在正常场景：
