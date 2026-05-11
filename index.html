@@ -94,12 +94,12 @@
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy83OTViN2Y5YzZlMWI4YjE4L0lRQm5WS2xmLXB4bVJyQlp6eHM2ZTVQd0FaRm1jSzVQQnhpSWdrTmdweU94TWRV.webp"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2ppWTVuYmFaS1NJSFVHQVhNRWRVTkFYSy0wVTJ0aUxDNVdSbXJHandNaExN.jpg"></li>
-          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWhKS0Q1aHFKVVRKc1pMdkczZ3FYaUFTM011XzdvcUNHckhkVFhQNFdocFY4.jpg"></li>
           <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWxTOVFEaFV6TlJLUDBJRTVhYUU1TEFiOU5KbDN2TG9IMTdpeDB4Q0RUSHRj.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQzFrU2hSWDdGMlM1TUh5dHA2VkZoTkFTN3FWdV8zWW9CSnVZZXdiVFZSc2pB.png"></li>
           <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRRFB6bmExUnVZYVQ0d2M5c1RTVG9qekFUUGxORTkzYjl1Y3lYTllXQnNIUUJZ.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQ2ppWTVuYmFaS1NJSFVHQVhNRWRVTkFYSy0wVTJ0aUxDNVdSbXJHandNaExN.jpg"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy83OTViN2Y5YzZlMWI4YjE4L0lRQm5WS2xmLXB4bVJyQlp6eHM2ZTVQd0FaRm1jSzVQQnhpSWdrTmdweU94TWRV.webp"></li>
+          <li class="item" data-background-image="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWhKS0Q1aHFKVVRKc1pMdkczZ3FYaUFTM011XzdvcUNHckhkVFhQNFdocFY4.jpg"></li>
         </ul>
       </div>
     </header>
@@ -123,6 +123,45 @@
   <div class="index wrap">
     <h2 class="divider">文章列表</h2>
     <div class="segments posts">
+        
+<article class="item">
+  <div class="cover">
+    <a href="/notes/ESDF/" itemprop="url" title="ESDF的构建"><img data-src="/notes/ESDF/cover.jpeg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="创建时间：2026-05-11 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2026-05-11T00:00:00+08:00">2026-05-11</time>
+  </span>
+</div>
+
+    <h3><a href="/notes/ESDF/" itemprop="url" title="ESDF的构建">ESDF的构建</a></h3>
+    <div class="excerpt">
+        # ESDF 的构建
+ESDF 用于回答一个比 OccupancyGrid 更连续的问题：
+12当前位置离最近障碍物有多远？距离场梯度指向哪里？
+在导航框架中，它被 B 样条优化、NMPC 障碍物代价和脱困搜索使用。
+# 1、EDT 与 ESDF
+
+EDT：Euclidean Distance Transform，是计算距离场的算法。
+ESDF：Euclidean Signed Distance Field，是计算得到的距离场表示。
+
+当前代码中：
+123EsdfMap::buildFromOccupancy() -&amp;gt; computeEDT() -&amp;gt;...
+    </div>
+    <div class="meta footer">
+      <span>
+        <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" title="笔记"><i class="ic i-flag"></i>笔记</a>
+      </span>
+    </div>
+    <a href="/notes/ESDF/" itemprop="url" title="ESDF的构建" class="btn">more...</a>
+  </div>
+</article>
+
         
 <article class="item">
   <div class="cover">
@@ -415,7 +454,7 @@ X∼N(μ1,σ12)X &#92;sim N(&#92;mu_1,...
         
 <article class="item">
   <div class="cover">
-    <a href="/2026/03/01/hello-world/" itemprop="url" title="Hello World"><img data-src="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83OTViN2Y5YzZlMWI4YjE4L0lRQWhKS0Q1aHFKVVRKc1pMdkczZ3FYaUFTM011XzdvcUNHckhkVFhQNFdocFY4.jpg"></a>
+    <a href="/2026/03/01/hello-world/" itemprop="url" title="Hello World"><img data-src="https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy83OTViN2Y5YzZlMWI4YjE4L0lRQm5WS2xmLXB4bVJyQlp6eHM2ZTVQd0FaRm1jSzVQQnhpSWdrTmdweU94TWRV.webp"></a>
   </div>
   <div class="info">
     
@@ -471,7 +510,7 @@ More info: Writing
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">9</span>
+        <span class="count">10</span>
         <span class="name">文章</span>
       </a>
     </div>
@@ -483,7 +522,7 @@ More info: Writing
     </div>
     <div class="item tags">
       <a href="/tags/">
-        <span class="count">15</span>
+        <span class="count">17</span>
         <span class="name">标签</span>
       </a>
     </div>
@@ -569,26 +608,6 @@ More info: Writing
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
-    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
-</div>
-
-    <span><a href="/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 </div>
 
     <span><a href="/2026/03/01/hello-world/" title="Hello World">Hello World</a></span>
@@ -611,17 +630,7 @@ More info: Writing
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/LQR_MPC/" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a>
-</div>
-
-    <span><a href="/notes/Leetcode207/" title="Leetcode随记-207课程表">Leetcode随记-207课程表</a></span>
+    <span><a href="/notes/point_lio_batch_queue/" title="Point-LIO Batch测量队列问题记录">Point-LIO Batch测量队列问题记录</a></span>
   </li>
 
       
@@ -641,7 +650,17 @@ More info: Writing
 <a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
 </div>
 
-    <span><a href="/notes/BSpline/" title="B样条与轨迹优化">B样条与轨迹优化</a></span>
+    <span><a href="/notes/ESDF/" title="ESDF的构建">ESDF的构建</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BLDC_voltage_saturation/" title="关于BLDC电机高速响应的一些探讨">关于BLDC电机高速响应的一些探讨</a></span>
   </li>
 
       
@@ -652,6 +671,36 @@ More info: Writing
 </div>
 
     <span><a href="/notes/ESKF/" title="误差状态卡尔曼滤波(ESKF) 101">误差状态卡尔曼滤波(ESKF) 101</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/LQR_MPC/" title="最优控制：LQR与MPC">最优控制：LQR与MPC</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AC%94%E8%AE%B0/" title="分类于 笔记">笔记</a>
+</div>
+
+    <span><a href="/notes/BSpline/" title="B样条与轨迹优化">B样条与轨迹优化</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a>
+</div>
+
+    <span><a href="/notes/Leetcode207/" title="Leetcode随记-207课程表">Leetcode随记-207课程表</a></span>
   </li>
 
   </ul>
